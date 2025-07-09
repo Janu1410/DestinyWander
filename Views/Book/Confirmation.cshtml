@@ -1,0 +1,191 @@
+@model backend.Models.FlightBookingModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Confirmation</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            /* Terra Cotta Color Palette */
+            --primary: #DF6951;
+            --primary-100: #F9E2DD;
+            --primary-200: #F2C5BB;
+            --primary-300: #EBA799;
+            --primary-400: #E58A77;
+            --primary-600: #C85E47;
+            --primary-700: #B1533D;
+            --primary-800: #9A4833;
+            --white: #FFFFFF;
+            --light-100: #FDF9F8;
+            --light-200: #FAF3F2;
+            --light-300: #F5EDEB;
+            --gray-400: #D7CECB;
+            --gray-500: #A89B97;
+            --gray-600: #796A65;
+            --dark-700: #4A3D39;
+            --dark-800: #2E2522;
+            --dark-900: #1A1210;
+            --border-radius-sm: 6px;
+            --border-radius-md: 12px;
+            --border-radius-lg: 20px;
+            --shadow-sm: 0 2px 8px rgba(46, 42, 40, 0.08);
+            --shadow-md: 0 4px 16px rgba(46, 42, 40, 0.12);
+            --shadow-lg: 0 8px 24px rgba(46, 42, 40, 0.16);
+            --transition-fast: 0.15s ease;
+            --transition-normal: 0.3s ease;
+            --transition-slow: 0.5s ease;
+        }
+
+        /* Custom Tailwind utilities */
+        .bg-primary { background-color: var(--primary); }
+        .bg-primary-100 { background-color: var(--primary-100); }
+        .bg-primary-200 { background-color: var(--primary-200); }
+        .bg-primary-300 { background-color: var(--primary-300); }
+        .bg-primary-600 { background-color: var(--primary-600); }
+        .text-primary { color: var(--primary); }
+        .text-primary-600 { color: var(--primary-600); }
+        .text-primary-800 { color: var(--primary-800); }
+        .text-dark-700 { color: var(--dark-700); }
+        .text-dark-800 { color: var(--dark-800); }
+        .border-primary-200 { border-color: var(--primary-200); }
+        .border-light-300 { border-color: var(--light-300); }
+        .shadow-sm { box-shadow: var(--shadow-sm); }
+        .shadow-md { box-shadow: var(--shadow-md); }
+        .shadow-lg { box-shadow: var(--shadow-lg); }
+        .transition-normal { transition: var(--transition-normal); }
+
+        /* Gradient for headers and buttons */
+        .gradient-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-600) 100%);
+        }
+
+        
+    </style>
+</head>
+<body class="bg-light-100 text-dark-800 font-poppins antialiased min-h-screen">
+    <div class="py-8 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-3xl mx-auto bg-white rounded-lg shadow-md overflow-hidden transition-normal hover:shadow-lg fade-in">
+            <!-- Booking ID Badge -->
+            <div class="px-6 pt-6 pb-2">
+                <div class="inline-flex items-center bg-light-200 rounded-full py-1 px-3">
+                    <i class="fas fa-check-circle text-primary mr-1"></i>
+                    <span class="text-xs font-medium text-dark-700">Booking ID: @Model.BookingId</span>
+                </div>
+            </div>
+
+            <!-- Card Header -->
+            <div class="gradient-primary p-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h2 class="text-2xl font-bold text-white">Booking Confirmation</h2>
+                        <p class="text-primary-100 mt-1">Your flight is confirmed!</p>
+                    </div>
+                    <div class="bg-primary-200/30 p-3 rounded-full">
+                        <i class="fas fa-plane text-white text-2xl"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-6 sm:p-8">
+                <!-- Passenger Details Section -->
+                <div class="mb-8">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-primary-100 p-2 rounded-sm mr-3">
+                            <i class="fas fa-user text-primary"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-dark-800">Passenger Details</h3>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="bg-light-200 p-4 rounded-sm">
+                            <p class="text-sm text-gray-500">Full Name</p>
+                            <p class="font-medium text-dark-800">@Model.FullName</p>
+                        </div>
+                        <div class="bg-light-200 p-4 rounded-sm">
+                            <p class="text-sm text-gray-500">Gender</p>
+                            <p class="font-medium text-dark-800">@Model.Gender</p>
+                        </div>
+                        <div class="bg-light-200 p-4 rounded-sm">
+                            <p class="text-sm text-gray-500">Date of Birth</p>
+                            <p class="font-medium text-dark-800">@Model.DateOfBirth.ToString("yyyy-MM-dd")</p>
+                        </div>
+                        <div class="bg-light-200 p-4 rounded-sm">
+                            <p class="text-sm text-gray-500">Phone Number</p>
+                            <p class="font-medium text-dark-800">@Model.PhoneNumber</p>
+                        </div>
+                        <div class="bg-light-200 p-4 rounded-sm">
+                            <p class="text-sm text-gray-500">Flight Class</p>
+                            <p class="font-medium text-dark-800">@Model.FlightClass</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Divider with Icon -->
+                <div class="relative my-8">
+                    <div class="absolute inset-0 flex items-center" aria-hidden="true">
+                        <div class="w-full border-t border-light-300"></div>
+                    </div>
+                    <div class="relative flex justify-center">
+                        <span class="bg-white px-4">
+                            <i class="fas fa-plane-departure text-primary text-xl"></i>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Flight Info Section -->
+                <div class="mt-8">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-primary-100 p-2 rounded-sm mr-3">
+                            <i class="fas fa-plane text-primary"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-dark-800">Flight Information</h3>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="bg-light-200 p-4 rounded-sm">
+                            <p class="text-sm text-gray-500">Origin</p>
+                            <p class="font-medium text-dark-800">@Model.Origin</p>
+                        </div>
+                        <div class="bg-light-200 p-4 rounded-sm">
+                            <p class="text-sm text-gray-500">Destination</p>
+                            <p class="font-medium text-dark-800">@Model.Destination</p>
+                        </div>
+                        <div class="bg-light-200 p-4 rounded-sm">
+                            <p class="text-sm text-gray-500">Flight Date</p>
+                            <p class="font-medium text-dark-800">@Model.FlightDate</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Confirmation Message -->
+                <div class="mt-8 p-4 bg-primary-100 rounded-md border border-primary-200">
+                    <div class="flex">
+                        <div class="flex-shrink-0">
+                            <i class="fas fa-check-circle text-primary-600"></i>
+                        </div>
+                        <div class="ml-3">
+                            <p class="text-sm text-primary-800">
+                                Your booking has been confirmed. A confirmation email has been sent to your registered email address.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Return to Home Button -->
+                <div class="mt-8 flex justify-center fade-in">
+                    <a href="/" class="gradient-primary text-white font-semibold py-3 px-6 rounded-md shadow-md hover:shadow-lg transition-normal transform hover:-translate-y-1 flex items-center" aria-label="Return to homepage">
+                        <i class="fas fa-home mr-2"></i> Return to Home
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

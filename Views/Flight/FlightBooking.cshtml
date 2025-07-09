@@ -1,0 +1,160 @@
+@model backend.Models.GetFlightDetailsResponse
+@{
+    Layout = null;
+    var flight = Model.legs.FirstOrDefault();
+    var agents = Model.bookingAgents.OrderBy(a => Convert.ToDecimal(a.Price)).ToList();
+    double usdToInrRate = 83.0; // Fixed conversion rate: 1 USD = 83 INR
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flight Details - @Model.Origin.CityName to @Model.Destination.CityName</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            /* Terra Cotta Color Palette */
+            --primary: #DF6951;
+            --primary-100: #F9E2DD;
+            --primary-200: #F2C5BB;
+            --primary-300: #EBA799;
+            --primary-400: #E58A77;
+            --primary-600: #C85E47;
+            --primary-700: #B1533D;
+            --primary-800: #9A4833;
+            --white: #FFFFFF;
+            --light-100: #FDF9F8;
+            --light-200: #FAF3F2;
+            --light-300: #F5EDEB;
+            --gray-400: #D7CECB;
+            --gray-500: #A89B97;
+            --gray-600: #796A65;
+            --dark-700: #4A3D39;
+            --dark-800: #2E2522;
+            --dark-900: #1A1210;
+            --border-radius-sm: 6px;
+            --border-radius-md: 12px;
+            --border-radius-lg: 20px;
+            --shadow-sm: 0 2px 8px rgba(46, 42, 40, 0.08);
+            --shadow-md: 0 4px 16px rgba(46, 42, 40, 0.12);
+            --shadow-lg: 0 8px 24px rgba(46, 42, 40, 0.16);
+            --transition-fast: 0.15s ease;
+            --transition-normal: 0.3s ease;
+            --transition-slow: 0.5s ease;
+        }
+
+        /* Custom Tailwind utilities */
+        .bg-primary { background-color: var(--primary); }
+        .bg-primary-100 { background-color: var(--primary-100); }
+        .bg-primary-200 { background-color: var(--primary-200); }
+        .bg-primary-300 { background-color: var(--primary-300); }
+        .bg-primary-600 { background-color: var(--primary-600); }
+        .text-primary { color: var(--primary); }
+        .text-primary-800 { color: var(--primary-800); }
+        .text-dark-700 { color: var(--dark-700); }
+        .text-dark-800 { color: var(--dark-800); }
+        .border-primary-300 { border-color: var(--primary-300); }
+        .shadow-sm { box-shadow: var(--shadow-sm); }
+        .shadow-md { box-shadow: var(--shadow-md); }
+        .shadow-lg { box-shadow: var(--shadow-lg); }
+        .transition-normal { transition: var(--transition-normal); }
+
+        /* Gradient for headers and buttons */
+        .gradient-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-600) 100%);
+        }
+
+       
+
+      
+    </style>
+</head>
+<body class="bg-light-100 text-dark-800 font-poppins antialiased min-h-screen">
+    <div class="container mx-auto px-4 py-10">
+        <div class="gradient-primary p-4 rounded-md mb-6 text-center">
+            <h1 class="text-2xl sm:text-3xl font-bold text-white">Flight from @Model.Origin.CityName to @Model.Destination.CityName</h1>
+        </div>
+
+        <div id="flightInfo" class="mb-10">
+            @if (flight != null)
+            {
+                <div class="bg-primary-100 p-6 rounded-lg border border-primary-300 shadow-md hover:shadow-lg transition-normal transform hover:scale-105 fade-in">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-plane text-primary text-2xl mr-3"></i>
+                        <h2 class="text-xl font-semibold text-dark-800">@flight.MarketingCarrier.CarrierName (@flight.MarketingCarrier.DisplayCode)</h2>
+                    </div>
+                    <div class="h-1 bg-gradient-to-r from-primary to-primary-600 rounded-full mb-4"></div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="flex items-start">
+                            <i class="fas fa-plane text-primary mr-2 mt-1"></i>
+                            <p class="text-dark-700"><strong>Flight:</strong> @flight.FlightNumber</p>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fas fa-map-marker-alt text-primary mr-2 mt-1"></i>
+                            <p class="text-dark-700"><strong>From:</strong> @flight.Origin.CityName (@flight.Origin.DisplayCode)</p>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fas fa-map-marker-alt text-primary mr-2 mt-1"></i>
+                            <p class="text-dark-700"><strong>To:</strong> @flight.Destination.CityName (@flight.Destination.DisplayCode)</p>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fas fa-calendar-alt text-primary mr-2 mt-1"></i>
+                            <p class="text-dark-700"><strong>Departure:</strong> @flight.Departure.ToLocalTime().ToString("f")</p>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fas fa-calendar-alt text-primary mr-2 mt-1"></i>
+                            <p class="text-dark-700"><strong>Arrival:</strong> @flight.Arrival.ToLocalTime().ToString("f")</p>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fas fa-clock text-primary mr-2 mt-1"></i>
+                            <p class="text-dark-700"><strong>Duration:</strong> @flight.Duration</p>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fas fa-plane-arrival text-primary mr-2 mt-1"></i>
+                            <p class="text-dark-700"><strong>Stops:</strong> @flight.StopDescription</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <h2 class="text-2xl font-bold text-dark-800 mb-6">Booking Options</h2>
+        <div class="h-1 bg-gradient-to-r from-primary to-primary-600 rounded-full mb-6"></div>
+        <div id="bookingAgents" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            @foreach (var agent in agents)
+            {
+                <div class="bg-primary-200 p-6 rounded-lg border border-primary-300 shadow-md hover:shadow-lg transition-normal transform hover:scale-105 fade-in">
+                    <div class="flex items-center mb-3">
+                        <i class="fas fa-user-tie text-primary mr-2"></i>
+                        <h3 class="text-lg font-semibold text-dark-800">@agent.Name</h3>
+                    </div>
+                    <div class="flex items-center mb-3">
+                        <i class="fas fa-rupee-sign text-primary mr-2"></i>
+                        <p class="text-xl font-bold text-primary-800">₹@Math.Round(Convert.ToDecimal(agent.Price) *  Convert.ToDecimal(usdToInrRate), 2).ToString("0.00")
+</p>
+                    </div>
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-star text-primary mr-2"></i>
+                        <p class="text-dark-700">@agent.RatingValue (@agent.RatingCount reviews)</p>
+                    </div>
+                    <form method="post" asp-controller="Book" asp-action="FillBookingForm">
+                        <input type="hidden" name="agentId" value="@agent.Id" />
+                        <input type="hidden" name="itineraryId" value="@Model.ItineraryId" />
+                        <input type="hidden" name="bookingId" value="@Model.BookingSessionId" />
+                        <input type="hidden" name="origin" value="@flight.Origin.CityName" />
+                        <input type="hidden" name="destination" value="@flight.Destination.CityName" />
+                        <input type="hidden" name="flightDate" value="@flight.Arrival.ToString("yyyy-MM-dd")" />
+                        <button type="submit" class="w-full gradient-primary text-white font-semibold py-3 px-4 rounded-md shadow-md hover:shadow-lg transition-normal transform hover:-translate-y-1 flex items-center justify-center" aria-label="Book with @agent.Name">
+                            <i class="fas fa-ticket-alt mr-2"></i> Book Now
+                        </button>
+                    </form>
+                </div>
+            }
+        </div>
+    </div>
+</body>
+</html>

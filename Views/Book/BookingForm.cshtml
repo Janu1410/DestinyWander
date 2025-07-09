@@ -1,0 +1,203 @@
+@model backend.Models.FlightBookingModel
+
+@{
+    ViewData["Title"] = "Flight Booking Form";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            /* Terra Cotta Color Palette */
+            --primary: #DF6951;
+            --primary-100: #F9E2DD;
+            --primary-200: #F2C5BB;
+            --primary-300: #EBA799;
+            --primary-400: #E58A77;
+            --primary-600: #C85E47;
+            --primary-700: #B1533D;
+            --primary-800: #9A4833;
+            --white: #FFFFFF;
+            --light-100: #FDF9F8;
+            --light-200: #FAF3F2;
+            --light-300: #F5EDEB;
+            --gray-400: #D7CECB;
+            --gray-500: #A89B97;
+            --gray-600: #796A65;
+            --dark-700: #4A3D39;
+            --dark-800: #2E2522;
+            --dark-900: #1A1210;
+            --border-radius-sm: 6px;
+            --border-radius-md: 12px;
+            --border-radius-lg: 20px;
+            --shadow-sm: 0 2px 8px rgba(46, 42, 40, 0.08);
+            --shadow-md: 0 4px 16px rgba(46, 42, 40, 0.12);
+            --shadow-lg: 0 8px 24px rgba(46, 42, 40, 0.16);
+            --transition-fast: 0.15s ease;
+            --transition-normal: 0.3s ease;
+            --transition-slow: 0.5s ease;
+        }
+
+        /* Custom Tailwind utilities */
+        .bg-primary { background-color: var(--primary); }
+        .bg-primary-100 { background-color: var(--primary-100); }
+        .bg-primary-200 { background-color: var(--primary-200); }
+        .bg-primary-300 { background-color: var(--primary-300); }
+        .bg-primary-600 { background-color: var(--primary-600); }
+        .text-primary { color: var(--primary); }
+        .text-primary-700 { color: var(--primary-700); }
+        .text-primary-800 { color: var(--primary-800); }
+        .text-dark-700 { color: var(--dark-700); }
+        .text-dark-800 { color: var(--dark-800); }
+        .border-primary-300 { border-color: var(--primary-300); }
+        .border-primary-400 { border-color: var(--primary-400); }
+        .shadow-sm { box-shadow: var(--shadow-sm); }
+        .shadow-md { box-shadow: var(--shadow-md); }
+        .shadow-lg { box-shadow: var(--shadow-lg); }
+        .transition-normal { transition: var(--transition-normal); }
+
+        /* Gradient for headers and buttons */
+        .gradient-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-600) 100%);
+        }
+
+        
+    </style>
+</head>
+<body class="bg-light-100 text-dark-800 font-poppins antialiased min-h-screen">
+    <div class="container mx-auto px-4 py-10">
+       
+        <form id="flightBookingForm" onsubmit="submitForm(event)" class="bg-white rounded-lg shadow-md p-6 sm:p-8 max-w-lg mx-auto fade-in">
+            <div class="space-y-6">
+                <div class="relative">
+                    <label asp-for="FullName" class="block text-sm font-medium text-dark-700 mb-1">Full Name</label>
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none top-6">
+                        <i class="fas fa-user text-gray-400"></i>
+                    </div>
+                    <input asp-for="FullName" class="pl-10 w-full border border-light-300 rounded-md py-2.5 px-3 text-dark-700 focus:outline-none focus:ring-2 focus:ring-primary-200 focus:border-primary-400 transition-normal" />
+                    <span asp-validation-for="FullName" class="text-primary-700 text-sm mt-1 block"></span>
+                </div>
+
+                <div class="relative">
+                    <label asp-for="Gender" class="block text-sm font-medium text-dark-700 mb-1">Gender</label>
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none top-6">
+                        <i class="fas fa-venus-mars text-gray-400"></i>
+                    </div>
+                    <select asp-for="Gender" class="pl-10 w-full border border-light-300 rounded-md py-2.5 px-3 text-dark-700 focus:outline-none focus:ring-2 focus:ring-primary-200 focus:border-primary-400 transition-normal">
+                        <option value="">Select Gender</option>
+                        <option>Male</option>
+                        <option>Female</option>
+                        <option>Other</option>
+                    </select>
+                    <span asp-validation-for="Gender" class="text-primary-700 text-sm mt-1 block"></span>
+                </div>
+
+                <div class="relative">
+                    <label asp-for="DateOfBirth" class="block text-sm font-medium text-dark-700 mb-1">Date of Birth</label>
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none top-6">
+                        <i class="fas fa-calendar-alt text-gray-400"></i>
+                    </div>
+                    <input asp-for="DateOfBirth" type="date" class="pl-10 w-full border border-light-300 rounded-md py-2.5 px-3 text-dark-700 focus:outline-none focus:ring-2 focus:ring-primary-200 focus:border-primary-400 transition-normal" />
+                    <span asp-validation-for="DateOfBirth" class="text-primary-700 text-sm mt-1 block"></span>
+                </div>
+
+                <div class="relative">
+                    <label asp-for="PhoneNumber" class="block text-sm font-medium text-dark-700 mb-1">Phone Number</label>
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none top-6">
+                        <i class="fas fa-phone text-gray-400"></i>
+                    </div>
+                    <input asp-for="PhoneNumber" class="pl-10 w-full border border-light-300 rounded-md py-2.5 px-3 text-dark-700 focus:outline-none focus:ring-2 focus:ring-primary-200 focus:border-primary-400 transition-normal" />
+                    <span asp-validation-for="PhoneNumber" class="text-primary-700 text-sm mt-1 block"></span>
+                </div>
+
+                <div class="relative">
+                    <label asp-for="FlightClass" class="block text-sm font-medium text-dark-700 mb-1">Flight Class</label>
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none top-6">
+                        <i class="fas fa-chair text-gray-400"></i>
+                    </div>
+                    <select asp-for="FlightClass" class="pl-10 w-full border border-light-300 rounded-md py-2.5 px-3 text-dark-700 focus:outline-none focus:ring-2 focus:ring-primary-200 focus:border-primary-400 transition-normal">
+                        <option value="">Select Class</option>
+                        <option>Economy</option>
+                        <option>Business</option>
+                        <option>First Class</option>
+                    </select>
+                    <span asp-validation-for="FlightClass" class="text-primary-700 text-sm mt-1 block"></span>
+                </div>
+
+                <input type="hidden" asp-for="AgentId" />
+                <input type="hidden" asp-for="ItineraryId" />
+                <input type="hidden" asp-for="BookingId" />
+                <input type="hidden" asp-for="Origin" />
+                <input type="hidden" asp-for="Destination" />
+                <input type="hidden" asp-for="FlightDate" />
+
+                <button type="submit" class="gradient-primary text-white font-semibold py-3 px-4 rounded-md shadow-md hover:shadow-lg transition-normal transform hover:-translate-y-1 flex items-center justify-center w-full" aria-label="Proceed to payment">
+                    <i class="fas fa-ticket-alt mr-2"></i> Proceed to Payment
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        async function submitForm(event) {
+            event.preventDefault();
+
+            const form = document.getElementById('flightBookingForm');
+            const formData = new FormData(form);
+
+            const bookingData = {
+                fullName: formData.get("FullName"),
+                gender: formData.get("Gender"),
+                dateOfBirth: formData.get("DateOfBirth"),
+                phoneNumber: formData.get("PhoneNumber"),
+                flightClass: formData.get("FlightClass"),
+                agentId: formData.get("AgentId"),
+                itineraryId: formData.get("ItineraryId"),
+                bookingId: formData.get("BookingId"),
+                flightDate: formData.get("FlightDate"),
+                origin: formData.get("Origin"),
+                destination: formData.get("Destination")
+            };
+            console.log(bookingData);
+
+            try {
+                const response = await fetch('/api/book/submit-booking', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(bookingData)
+                });
+
+                const result = await response.json();
+                console.log("result");
+                if (response.ok && result.redirectUrl) {
+                    const url = new URL(result.redirectUrl, window.location.origin);
+                    if (result.bookingId) {
+                        url.searchParams.append("bookingId", result.bookingId);
+                    }
+                    window.location.href = url.toString();
+                } else {
+                    console.error(result);
+                    alert("Booking failed: " + (result.message || "Check form data."));
+                }
+            } catch (error) {
+                console.error("Error submitting booking:", error);
+                alert("An error occurred.");
+            }
+        }
+    </script>
+
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }
+</body>
+</html>

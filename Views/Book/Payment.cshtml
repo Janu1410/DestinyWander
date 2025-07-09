@@ -1,0 +1,163 @@
+@model backend.Models.FlightBookingModel
+
+@{
+    ViewData["Title"] = "Payment Page";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            /* Terra Cotta Color Palette */
+            --primary: #DF6951;
+            --primary-100: #F9E2DD;
+            --primary-200: #F2C5BB;
+            --primary-300: #EBA799;
+            --primary-400: #E58A77;
+            --primary-600: #C85E47;
+            --primary-700: #B1533D;
+            --primary-800: #9A4833;
+            --white: #FFFFFF;
+            --light-100: #FDF9F8;
+            --light-200: #FAF3F2;
+            --light-300: #F5EDEB;
+            --gray-400: #D7CECB;
+            --gray-500: #A89B97;
+            --gray-600: #796A65;
+            --dark-700: #4A3D39;
+            --dark-800: #2E2522;
+            --dark-900: #1A1210;
+            --border-radius-sm: 6px;
+            --border-radius-md: 12px;
+            --border-radius-lg: 20px;
+            --shadow-sm: 0 2px 8px rgba(46, 42, 40, 0.08);
+            --shadow-md: 0 4px 16px rgba(46, 42, 40, 0.12);
+            --shadow-lg: 0 8px 24px rgba(46, 42, 40, 0.16);
+            --transition-fast: 0.15s ease;
+            --transition-normal: 0.3s ease;
+            --transition-slow: 0.5s ease;
+        }
+
+        /* Custom Tailwind utilities */
+        .bg-primary { background-color: var(--primary); }
+        .bg-primary-100 { background-color: var(--primary-100); }
+        .bg-primary-200 { background-color: var(--primary-200); }
+        .bg-primary-300 { background-color: var(--primary-300); }
+        .bg-primary-600 { background-color: var(--primary-600); }
+        .text-primary { color: var(--primary); }
+        .text-primary-700 { color: var(--primary-700); }
+        .text-primary-800 { color: var(--primary-800); }
+        .text-dark-700 { color: var(--dark-700); }
+        .text-dark-800 { color: var(--dark-800); }
+        .border-primary-300 { border-color: var(--primary-300); }
+        .border-primary-400 { border-color: var(--primary-400); }
+        .shadow-sm { box-shadow: var(--shadow-sm); }
+        .shadow-md { box-shadow: var(--shadow-md); }
+        .shadow-lg { box-shadow: var(--shadow-lg); }
+        .transition-normal { transition: var(--transition-normal); }
+
+        /* Gradient for headers and buttons */
+        .gradient-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-600) 100%);
+        }
+
+        /* Fade-in animation for card */
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+   
+    </style>
+</head>
+<body class="bg-light-100 text-dark-800 font-poppins antialiased min-h-screen">
+    <div class="py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-md mx-auto bg-white rounded-lg shadow-md overflow-hidden md:max-w-2xl transition-normal hover:shadow-lg fade-in">
+            <!-- Card Header -->
+            <div class="gradient-primary p-6">
+                <h2 class="text-2xl font-bold text-white">Complete Your Flight Booking</h2>
+                <p class="text-primary-100 mt-1">Booking Reference: #@Model.Id</p>
+            </div>
+
+            <!-- Form Body -->
+            <div class="p-6 sm:p-8">
+                <h3 class="text-lg font-medium text-dark-800 mb-4">Payment Information</h3>
+                <div class="h-1 bg-gradient-to-r from-primary to-primary-600 rounded-full mb-6"></div>
+
+                <!-- Card Number -->
+                <div class="mb-6">
+                    <label for="cardNumber" class="block text-sm font-medium text-dark-700 mb-1">Card Number</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fas fa-credit-card text-gray-500"></i>
+                        </div>
+                        <input
+                            type="text"
+                            id="cardNumber"
+                            class="pl-10 w-full border border-light-300 rounded-md py-3 px-3 text-dark-700 focus:outline-none focus:ring-2 focus:ring-primary-200 focus:border-primary-400 transition-normal"
+                            placeholder="1234 5678 9012 3456"
+                            required />
+                    </div>
+                </div>
+
+                <!-- Expiry Date and CVV -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="mb-6">
+                        <label for="expiry" class="block text-sm font-medium text-dark-700 mb-1">Expiry Date</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="fas fa-calendar-alt text-gray-500"></i>
+                            </div>
+                            <input
+                                type="month"
+                                id="expiry"
+                                class="pl-10 w-full border border-light-300 rounded-md py-3 px-3 text-dark-700 focus:outline-none focus:ring-2 focus:ring-primary-200 focus:border-primary-400 transition-normal"
+                                required />
+                        </div>
+                    </div>
+
+                    <div class="mb-6">
+                        <label for="cvv" class="block text-sm font-medium text-dark-700 mb-1">CVV</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="fas fa-lock text-gray-500"></i>
+                            </div>
+                            <input
+                                type="password"
+                                id="cvv"
+                                class="pl-10 w-full border border-light-300 rounded-md py-3 px-3 text-dark-700 focus:outline-none focus:ring-2 focus:ring-primary-200 focus:border-primary-400 transition-normal"
+                                required
+                                maxlength="3"
+                                placeholder="•••" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Form Submission -->
+                <form action="/api/book/confirm-booking" method="GET">
+                    <input type="hidden" name="bookingId" value="@Model.Id" />
+                    <button
+                        type="submit"
+                        class="w-full gradient-primary text-white font-semibold py-3 px-4 rounded-md shadow-md hover:shadow-lg transition-normal transform hover:-translate-y-1 flex items-center justify-center"
+                        aria-label="Confirm payment">
+                        <i class="fas fa-money-check-alt mr-2"></i> Pay Now
+                    </button>
+                </form>
+
+                <!-- Secure Payment Badge -->
+                <div class="mt-6 flex items-center justify-center">
+                    <i class="fas fa-lock text-primary-600 mr-2"></i>
+                    <span class="text-xs text-gray-600">Your payment is secure and encrypted</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

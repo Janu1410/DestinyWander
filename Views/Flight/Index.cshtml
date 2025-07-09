@@ -1,0 +1,622 @@
+@{
+    ViewData["Title"] = "Flight Search";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <style>
+        :root {
+            /* Terra Cotta Color Palette */
+            --primary: #DF6951;
+            --primary-100: #F9E2DD;
+            --primary-200: #F2C5BB;
+            --primary-300: #EBA799;
+            --primary-400: #E58A77;
+            --primary-600: #C85E47;
+            --primary-700: #B1533D;
+            --primary-800: #9A4833;
+            --white: #FFFFFF;
+            --light-100: #FDF9F8;
+            --light-200: #FAF3F2;
+            --light-300: #F5EDEB;
+            --gray-400: #D7CECB;
+            --gray-500: #A89B97;
+            --gray-600: #796A65;
+            --dark-700: #4A3D39;
+            --dark-800: #2E2522;
+            --dark-900: #1A1210;
+            --border-radius-sm: 6px;
+            --border-radius-md: 12px;
+            --border-radius-lg: 20px;
+            --shadow-sm: 0 2px 8px rgba(46, 42, 40, 0.08);
+            --shadow-md: 0 4px 16px rgba(46, 42, 40, 0.12);
+            --shadow-lg: 0 8px 24px rgba(46, 42, 40, 0.16);
+            --transition-fast: 0.15s ease;
+            --transition-normal: 0.3s ease;
+            --transition-slow: 0.5s ease;
+        }
+
+        /* Custom Tailwind utilities */
+        .bg-primary { background-color: var(--primary); }
+        .bg-primary-100 { background-color: var(--primary-100); }
+        .bg-primary-200 { background-color: var(--primary-200); }
+        .bg-primary-300 { background-color: var(--primary-300); }
+        .bg-primary-600 { background-color: var(--primary-600); }
+        .text-primary { color: var(--primary); }
+        .text-primary-800 { color: var(--primary-800); }
+        .text-dark-700 { color: var(--dark-700); }
+        .text-dark-800 { color: var(--dark-800); }
+        .border-primary-300 { border-color: var(--primary-300); }
+        .shadow-sm { box-shadow: var(--shadow-sm); }
+        .shadow-md { box-shadow: var(--shadow-md); }
+        .shadow-lg { box-shadow: var(--shadow-lg); }
+        .transition-normal { transition: var(--transition-normal); }
+
+        /* Gradient for headers and buttons */
+        .gradient-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-600) 100%);
+        }
+
+        /* Suggestion and dropdown styling */
+        .suggestions {
+            position: absolute;
+            z-index: 10;
+            width: 100%;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .suggestion-item:hover {
+            background-color: var(--primary-100);
+            cursor: pointer;
+        }
+
+        /* Sort button active state */
+        .sort-btn.active {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+
+        /* Fade-in animation for cards and suggestions */
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        /*  */
+
+        /* Stops line styling */
+        .stops-line {
+            display: flex;
+            align-items: center;
+            position: relative;
+            height: 4px;
+            background: var(--gray-400);
+            border-radius: 2px;
+        }
+
+        .stop-dot {
+            width: 10px;
+            height: 10px;
+            background: var(--primary);
+            border-radius: 50%;
+            position: absolute;
+        }
+
+        .stop-dot.start { left: 0; }
+        .stop-dot.end { right: 0; }
+        .stop-dot.intermediate { left: 50%; transform: translateX(-50%); }
+    </style>
+</head>
+<body class="bg-light-100 text-dark-800 font-poppins antialiased min-h-screen">
+    <!-- Search Form -->
+    <div class="py-10">
+        <div class="container mx-auto px-4">
+            <div class="bg-white rounded-lg shadow-lg p-6 sm:p-8 max-w-5xl mx-auto">
+                <div class="gradient-primary p-4 rounded-md mb-6">
+                    <h2 class="text-2xl sm:text-3xl font-bold text-white text-center">Search Flights</h2>
+                </div>
+                <form id="flightSearchForm" onsubmit="searchFlights(event)">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <!-- From Input -->
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="fas fa-plane-departure text-gray-400"></i>
+                            </div>
+                            <input type="text" id="fromInput" name="from" placeholder="From (e.g., JFK)"
+                                class="pl-10 w-full border border-light-300 rounded-md py-2.5 px-3 text-dark-700 focus:outline-none focus:ring-2 focus:ring-primary-200 focus:border-primary-400 transition-normal"
+                                autocomplete="off" required>
+                            <div id="fromSuggestions" class="suggestions bg-white border border-light-300 rounded-md shadow-sm mt-1 hidden"></div>
+                        </div>
+
+                        <!-- To Input -->
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="fas fa-plane-arrival text-gray-400"></i>
+                            </div>
+                            <input type="text" id="toInput" name="to" placeholder="To (e.g., LAX)"
+                                class="pl-10 w-full border border-light-300 rounded-md py-2.5 px-3 text-dark-700 focus:outline-none focus:ring-2 focus:ring-primary-200 focus:border-primary-400 transition-normal"
+                                autocomplete="off" required>
+                            <button type="button" class="absolute inset-y-0 right-0 pr-3 flex items-center text-primary hover:text-primary-600 transition-normal" onclick="swapLocations()" aria-label="Swap locations">
+                                <i class="fas fa-exchange-alt"></i>
+                            </button>
+                            <div id="toSuggestions" class="suggestions bg-white border border-light-300 rounded-md shadow-sm mt-1 hidden"></div>
+                        </div>
+
+                        <!-- Flight Type -->
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="fas fa-plane text-gray-400"></i>
+                            </div>
+                            <select id="flightType" name="flightType" class="pl-10 w-full border border-light-300 rounded-md py-2.5 px-3 text-dark-700 focus:outline-none focus:ring-2 focus:ring-primary-200 focus:border-primary-400 transition-normal" onchange="toggleReturnDate()">
+                                <option value="return">Return</option>
+                                <option value="oneway">One Way</option>
+                                <option value="multicity">Multi-city</option>
+                            </select>
+                        </div>
+
+                        <!-- Departure Date -->
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="fas fa-calendar-alt text-gray-400"></i>
+                            </div>
+                            <input type="date" id="departureDate" name="departureDate"
+                                class="pl-10 w-full border border-light-300 rounded-md py-2.5 px-3 text-dark-700 focus:outline-none focus:ring-2 focus:ring-primary-200 focus:border-primary-400 transition-normal"
+                                required>
+                        </div>
+
+                        <!-- Return Date -->
+                        <div id="returnDateContainer" class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="fas fa-calendar-alt text-gray-400"></i>
+                            </div>
+                            <input type="date" id="returnDate" name="returnDate"
+                                class="pl-10 w-full border border-light-300 rounded-md py-2.5 px-3 text-dark-700 focus:outline-none focus:ring-2 focus:ring-primary-200 focus:border-primary-400 transition-normal">
+                        </div>
+
+                        <!-- Cabin Class -->
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="fas fa-chair text-gray-400"></i>
+                            </div>
+                            <select id="cabinClass" name="cabinClass" class="pl-10 w-full border border-light-300 rounded-md py-2.5 px-3 text-dark-700 focus:outline-none focus:ring-2 focus:ring-primary-200 focus:border-primary-400 transition-normal">
+                                <option value="economy">Economy Class</option>
+                                <option value="premium_economy">Premium Economy</option>
+                                <option value="business">Business Class</option>
+                                <option value="first">First Class</option>
+                            </select>
+                        </div>
+
+                        <!-- Travelers -->
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="fas fa-users text-gray-400"></i>
+                            </div>
+                            <input type="text" id="travelersInput" placeholder="Travelers"
+                                class="pl-10 w-full border border-light-300 rounded-md py-2.5 px-3 text-dark-700 focus:outline-none focus:ring-2 focus:ring-primary-200 focus:border-primary-400 transition-normal cursor-pointer"
+                                readonly onclick="toggleTravelerDropdown()">
+                            <div id="travelersDropdown" class="suggestions bg-primary-100 border border-primary-300 rounded-md shadow-sm mt-1 hidden">
+                                <div class="p-4">
+                                    <div class="flex justify-between items-center mb-4">
+                                        <label for="adults" class="text-dark-700 font-medium">Adults</label>
+                                        <div class="flex items-center">
+                                            <button type="button" onclick="updateTravelers('adults', -1)"
+                                                class="px-3 py-1 bg-primary-200 text-dark-700 rounded-md hover:bg-primary-300 transition-normal">-</button>
+                                            <input type="number" id="adults" name="adults" value="1" min="1"
+                                                class="w-12 mx-2 text-center border border-light-300 rounded-md text-dark-700" readonly>
+                                            <button type="button" onclick="updateTravelers('adults', 1)"
+                                                class="px-3 py-1 bg-primary-200 text-dark-700 rounded-md hover:bg-primary-300 transition-normal">+</button>
+                                        </div>
+                                    </div>
+                                    <div class="flex justify-between items-center">
+                                        <label for="children" class="text-dark-700 font-medium">Children</label>
+                                        <div class="flex items-center">
+                                            <button type="button" onclick="updateTravelers('children', -1)"
+                                                class="px-3 py-1 bg-primary-200 text-dark-700 rounded-md hover:bg-primary-300 transition-normal">-</button>
+                                            <input type="number" id="children" name="children" value="0" min="0"
+                                                class="w-12 mx-2 text-center border border-light-300 rounded-md text-dark-700" readonly>
+                                            <button type="button" onclick="updateTravelers('children', 1)"
+                                                class="px-3 py-1 bg-primary-200 text-dark-700 rounded-md hover:bg-primary-300 transition-normal">+</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Search Button -->
+                        <button type="submit" class="gradient-primary text-white font-semibold py-3 px-4 rounded-md shadow-md hover:shadow-lg transition-normal transform hover:-translate-y-1 flex items-center justify-center">
+                            <i class="fas fa-search mr-2"></i> Search Flights
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 py-6">
+        <div class="flight-results">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl sm:text-3xl font-bold text-dark-800">Flight Results</h2>
+                <div class="flex space-x-2">
+                    <button class="sort-btn gradient-primary text-white font-medium py-2 px-4 rounded-md shadow-md active">Best</button>
+                    <button class="sort-btn bg-primary-100 text-dark-700 font-medium py-2 px-4 rounded-md shadow-sm hover:bg-primary-200 transition-normal">Price</button>
+                    <button class="sort-btn bg-primary-100 text-dark-700 font-medium py-2 px-4 rounded-md shadow-sm hover:bg-primary-200 transition-normal">Duration</button>
+                    <button class="sort-btn bg-primary-100 text-dark-700 font-medium py-2 px-4 rounded-md shadow-sm hover:bg-primary-200 transition-normal">Departure</button>
+                </div>
+            </div>
+            <div class="h-1 bg-gradient-to-r from-primary to-primary-600 rounded-full mb-6"></div>
+            <div id="flight-result" class="space-y-6">
+                <!-- Flight results will be inserted here by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+        console.log("version 3");
+
+        // Initialize Flatpickr for date pickers
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log("version 3");
+
+            const fromInput = document.getElementById('fromInput');
+            const toInput = document.getElementById('toInput');
+            const fromSuggestions = document.getElementById('fromSuggestions');
+            const toSuggestions = document.getElementById('toSuggestions');
+
+            fromInput.addEventListener('input', async () => {
+                const query = fromInput.value.trim();
+                if (query.length < 2) {
+                    fromSuggestions.classList.add('hidden');
+                    return;
+                }
+                const suggestions = await fetchAutocompleteSuggestions(query);
+                displaySuggestions(suggestions, fromSuggestions, fromInput);
+            });
+
+            toInput.addEventListener('input', async () => {
+                const query = toInput.value.trim();
+                if (query.length < 2) {
+                    toSuggestions.classList.add('hidden');
+                    return;
+                }
+                const suggestions = await fetchAutocompleteSuggestions(query);
+                displaySuggestions(suggestions, toSuggestions, toInput);
+            });
+
+            toggleReturnDate();
+            updateTravelersDisplay();
+        });
+
+        // Toggle Return Date visibility based on flight type
+        function toggleReturnDate() {
+            const flightType = document.getElementById('flightType').value;
+            const returnDateContainer = document.getElementById('returnDateContainer');
+            const returnDateInput = document.getElementById('returnDate');
+            if (flightType === 'oneway') {
+                returnDateContainer.style.display = 'none';
+                returnDateInput.removeAttribute('required');
+            } else {
+                returnDateContainer.style.display = 'block';
+                returnDateInput.setAttribute('required', 'required');
+            }
+        }
+
+        // Swap Locations
+        function swapLocations() {
+            const fromInput = document.getElementById('fromInput');
+            const toInput = document.getElementById('toInput');
+            const tempValue = fromInput.value;
+            const tempId = fromInput.dataset.airportId || '';
+            fromInput.value = toInput.value;
+            fromInput.dataset.airportId = toInput.dataset.airportId || '';
+            toInput.value = tempValue;
+            toInput.dataset.airportId = tempId;
+        }
+
+        // Autocomplete Functionality
+        async function fetchAutocompleteSuggestions(query) {
+            try {
+                const encodedQuery = encodeURIComponent(query);
+                const response = await axios.get(`/api/flight/search-airport?query=${encodedQuery}`);
+                if (response.data.Success && Array.isArray(response.data.Data)) {
+                    return response.data.Data.map(item => ({
+                        id: item.Value.SkyId,
+                        entityId: item.Value.EntityId,
+                        name: item.Label,
+                        city: item.Subtitle
+                    }));
+                }
+                return [];
+            } catch (error) {
+                console.error('Failed to fetch autocomplete suggestions:', error);
+                return [];
+            }
+        }
+
+        // Display suggestions
+        function displaySuggestions(suggestions, container, input) {
+            container.innerHTML = '';
+            if (suggestions.length === 0) {
+                container.classList.add('hidden');
+                return;
+            }
+            container.classList.remove('hidden');
+            suggestions.forEach(suggestion => {
+                const div = document.createElement('div');
+                div.classList.add('suggestion-item', 'p-3', 'text-dark-700', 'transition-normal', 'fade-in', 'flex', 'items-center');
+                div.innerHTML = `
+                    <i class="fas fa-plane mr-2 text-primary"></i>
+                    <span>${suggestion.name} - ${suggestion.city}</span>
+                `;
+                div.addEventListener('click', () => {
+                    input.value = suggestion.name;
+                    input.dataset.airportId = suggestion.id;
+                    input.dataset.airportEntityId = suggestion.entityId;
+                    container.classList.add('hidden');
+                });
+                container.appendChild(div);
+            });
+        }
+
+        // Hide suggestions when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!fromInput.contains(e.target) && !fromSuggestions.contains(e.target)) {
+                fromSuggestions.classList.add('hidden');
+            }
+            if (!toInput.contains(e.target) && !toSuggestions.contains(e.target)) {
+                toSuggestions.classList.add('hidden');
+            }
+            if (!document.getElementById('travelersInput').contains(e.target) && !document.getElementById('travelersDropdown').contains(e.target)) {
+                document.getElementById('travelersDropdown').classList.add('hidden');
+            }
+        });
+
+        // Travelers Dropdown Functionality
+        function toggleTravelerDropdown() {
+            const dropdown = document.getElementById('travelersDropdown');
+            dropdown.classList.toggle('hidden');
+        }
+
+        function updateTravelers(type, change) {
+            const adultsInput = document.getElementById('adults');
+            const childrenInput = document.getElementById('children');
+            let adults = parseInt(adultsInput.value);
+            let children = parseInt(childrenInput.value);
+
+            if (type === 'adults') {
+                adults = Math.max(1, adults + change);
+                adultsInput.value = adults;
+            } else if (type === 'children') {
+                children = Math.max(0, children + change);
+                childrenInput.value = children;
+            }
+
+            updateTravelersDisplay();
+        }
+
+        function updateTravelersDisplay() {
+            const adults = document.getElementById('adults').value;
+            const children = document.getElementById('children').value;
+            const total = parseInt(adults) + parseInt(children);
+            document.getElementById('travelersInput').value = `${total} Traveler${total > 1 ? 's' : ''}`;
+        }
+
+        // Search Flights
+        async function searchFlights(event) {
+            event.preventDefault();
+
+            const fromInput = document.getElementById('fromInput');
+            const toInput = document.getElementById('toInput');
+            const flightType = document.getElementById('flightType').value;
+            const departureDate = document.getElementById('departureDate').value;
+            const returnDate = document.getElementById('returnDate').value;
+            const adults = document.getElementById('adults').value;
+            const children = document.getElementById('children').value;
+            const cabinClass = "Economy";
+
+            if (!fromInput.value || !toInput.value || !departureDate || (flightType === 'return' && !returnDate)) {
+                alert('Please fill in all required fields.');
+                return;
+            }
+
+            const requestData = {
+                "originSkyId": fromInput.dataset.airportId || "",
+                "destinationSkyId": toInput.dataset.airportId || "",
+                "originEntityId": fromInput.dataset.airportEntityId || "",
+                "destinationEntityId": toInput.dataset.airportEntityId || "",
+                "date": departureDate,
+                "returnDate": flightType === "return" ? returnDate : null,
+                "cabinClass": "Economy",
+                "adults": adults,
+                "children": children,
+                "infants": 0,
+                "sortBy": "Best",
+                "limit": 10,
+                "carriersIds": []
+            };
+
+            try {
+                const response = await fetch("/api/flight/search-flight", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(requestData)
+                });
+                const result = await response.json();
+                console.log(result);
+                displayFlights(result.Data);
+            } catch (error) {
+                console.error("Error fetching flights:", error);
+            }
+        }
+
+        function displayFlights(data) {
+            const flightResults = document.getElementById("flight-result");
+            flightResults.innerHTML = "";
+
+            if (data.length === 0) {
+                flightResults.innerHTML = `
+                    <div class="bg-primary-100 p-6 rounded-lg border border-primary-300 shadow-md text-center fade-in">
+                        <i class="fas fa-plane-slash text-primary text-3xl mb-2"></i>
+                        <h3 class="text-xl font-semibold text-dark-800">No flights found matching your criteria</h3>
+                        <p class="text-dark-700">Try adjusting your search filters</p>
+                    </div>
+                `;
+                return;
+            }
+
+            data.forEach((flight) => {
+                const flightContainer = document.createElement("div");
+                flightContainer.classList.add("bg-primary-100", "p-6", "rounded-lg", "border", "border-primary-300", "shadow-md", "hover:shadow-lg", "transition-normal", "transform", "hover:scale-105", "fade-in");
+
+                flightContainer.innerHTML = `
+                    <div class="flex justify-between items-center mb-4">
+                        <div class="flex items-center">
+                            <img src="${flight.OutboundLeg.MarketingCarrier.CarrierLogo}" alt="${flight.OutboundLeg.MarketingCarrier.CarrierName}" class="w-10 h-10 mr-3 rounded-full">
+                            <div>
+                                <h3 class="text-lg font-semibold text-dark-800">${flight.OutboundLeg.MarketingCarrier.CarrierName}</h3>
+                                <p class="text-sm text-dark-700">Flight #${flight.OutboundLeg.FlightNumber}</p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <span class="text-xl font-bold text-primary-800">${flight.Price}</span>
+                            <span class="text-sm text-dark-700 block">per person</span>
+                        </div>
+                    </div>
+                    <div class="h-1 bg-gradient-to-r from-primary to-primary-600 rounded-full mb-4"></div>
+                    <!-- Outbound Leg -->
+                    <div class="mb-6">
+                        <div class="flex justify-between items-center mb-3">
+                            <h4 class="text-base font-semibold text-dark-800 flex items-center">
+                                <i class="fas fa-plane-departure text-primary mr-2"></i> Outbound Flight
+                            </h4>
+                            <span class="text-sm text-dark-700">${flight.OutboundLeg.Duration}</span>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                            <div class="text-left">
+                                <div class="text-lg font-medium text-dark-800">${formatTime(flight.OutboundLeg.Departure)}</div>
+                                <div class="text-sm text-dark-700">${formatDate(flight.OutboundLeg.Departure)}</div>
+                                <div class="text-sm text-dark-700">${flight.OutboundLeg.Origin.CityName} (${flight.OutboundLeg.Origin.DisplayCode})</div>
+                            </div>
+                            <div class="flex flex-col items-center justify-center">
+                                <div class="stops-line w-full">
+                                    <div class="stop-dot start"></div>
+                                    <div class="stop-line w-full"></div>
+                                    ${flight.OutboundLeg.StopCount > 0 ? '<div class="stop-dot intermediate"></div>' : ''}
+                                    <div class="stop-dot end"></div>
+                                </div>
+                                <div class="text-sm text-dark-700 mt-1">${flight.OutboundLeg.StopCount === 0 ? 'Non-stop' : `${flight.OutboundLeg.StopCount} stop(s)`}</div>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-lg font-medium text-dark-800">${formatTime(flight.OutboundLeg.Arrival)}</div>
+                                <div class="text-sm text-dark-700">${formatDate(flight.OutboundLeg.Arrival)}</div>
+                                <div class="text-sm text-dark-700">${flight.OutboundLeg.Destination.CityName} (${flight.OutboundLeg.Destination.DisplayCode})</div>
+                            </div>
+                        </div>
+                        <div class="mt-3 text-right">
+                            <button class="gradient-primary text-white font-medium py-2 px-4 rounded-md shadow-md hover:shadow-lg transition-normal transform hover:-translate-y-1"
+                                onclick='showFlightDetails(${JSON.stringify(flight.SessionId)}, ${JSON.stringify(flight.OutboundLeg)})' aria-label="Get outbound flight details">
+                                <i class="fas fa-info-circle mr-2"></i> Get Details
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Return Leg (if exists) -->
+                    ${flight.ReturnLeg ? `
+                    <div>
+                        <div class="flex justify-between items-center mb-3">
+                            <h4 class="text-base font-semibold text-dark-800 flex items-center">
+                                <i class="fas fa-plane-arrival text-primary mr-2"></i> Return Flight
+                            </h4>
+                            <span class="text-sm text-dark-700">${flight.ReturnLeg.Duration}</span>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                            <div class="text-left">
+                                <div class="text-lg font-medium text-dark-800">${formatTime(flight.ReturnLeg.Departure)}</div>
+                                <div class="text-sm text-dark-700">${formatDate(flight.ReturnLeg.Departure)}</div>
+                                <div class="text-sm text-dark-700">${flight.ReturnLeg.Origin.CityName} (${flight.ReturnLeg.Origin.DisplayCode})</div>
+                            </div>
+                            <div class="flex flex-col items-center justify-center">
+                                <div class="stops-line w-full">
+                                    <div class="stop-dot start"></div>
+                                    <div class="stop-line w-full"></div>
+                                    ${flight.ReturnLeg.StopCount > 0 ? '<div class="stop-dot intermediate"></div>' : ''}
+                                    <div class="stop-dot end"></div>
+                                </div>
+                                <div class="text-sm text-dark-700 mt-1">${flight.ReturnLeg.StopCount === 0 ? 'Non-stop' : `${flight.ReturnLeg.StopCount} stop(s)`}</div>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-lg font-medium text-dark-800">${formatTime(flight.ReturnLeg.Arrival)}</div>
+                                <div class="text-sm text-dark-700">${formatDate(flight.ReturnLeg.Arrival)}</div>
+                                <div class="text-sm text-dark-700">${flight.ReturnLeg.Destination.CityName} (${flight.ReturnLeg.Destination.DisplayCode})</div>
+                            </div>
+                        </div>
+                        <div class="mt-3 text-right">
+                            <button class="gradient-primary text-white font-medium py-2 px-4 rounded-md shadow-md hover:shadow-lg transition-normal transform hover:-translate-y-1"
+                                onclick='showFlightDetails(${JSON.stringify(flight.SessionId)}, ${JSON.stringify(flight.ReturnLeg)})' aria-label="Get return flight details">
+                                <i class="fas fa-info-circle mr-2"></i> Get Details
+                            </button>
+                        </div>
+                    </div>
+                    ` : ''}
+                `;
+
+                flightResults.appendChild(flightContainer);
+            });
+        }
+
+        // Helper functions for formatting
+        function formatTime(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString([], { month: 'short', day: 'numeric' });
+        }
+
+        async function showFlightDetails(sessionId, leg) {
+            const showFlightRequestedData = {
+                "itineraryId": leg.LegId,
+                "sessionId": sessionId,
+                "Legs": [{
+                    "destination": leg.Destination.DisplayCode,
+                    "origin": leg.Origin.DisplayCode,
+                    "date": leg.Departure.split('T')[0]
+                }],
+                "cabinClass": "Economy",
+                "adults": document.getElementById('adults').value,
+                "children": document.getElementById('children').value,
+                "infants": 0
+            };
+            console.log(showFlightRequestedData);
+            try {
+                const response = await fetch("/api/flight/get-flight-details", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(showFlightRequestedData)
+                });
+                const result = await response.json();
+                if (result.redirectUrl) {
+                    window.location.href = result.redirectUrl;
+                } else {
+                    console.log("Redirect failed or an error occurred.");
+                }
+            } catch (error) {
+                console.error("Error fetching flights:", error);
+            }
+        }
+    </script>
+</body>
+</html>

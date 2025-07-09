@@ -1,0 +1,149 @@
+﻿@{
+    ViewData["Title"] = "Home";
+     Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (TempData["Success"] != null)
+{
+    <div style="color: green; font-weight: bold;">@TempData["Success"]</div>
+}
+
+
+<!-- Services Section -->
+<section class="services">
+    <h5 class="category">CATEGORY</h5>
+    <h2 class="section-title">We Offer Best Services</h2>
+    <div class="service-cards">
+        <div class="card">
+            <img src="~/imagesH/guide.png" alt="Guided Tours">
+            <h4>Guided Tours</h4>
+            <p>Let your curiosity be guided by those who know the path best.</p>
+        </div>
+        <div class="card">
+            <img src="~/imagesH/flights.png" alt="Best Flights">
+            <h4>Best Flights Options</h4>
+            <p>The best flights for your next journey are just a click away.</p>
+        </div>
+        <div class="card">
+            <img src="~/imagesH/religious.png" alt="Religious Tours">
+            <h4>Religious Tours</h4>
+            <p>Embark on a journey of faith, where every step brings you closer to the divine.</p>
+        </div>
+        <div class="card">
+            <img src="~/imagesH/hotel1.png" alt="Hotel Choices">
+            <h4>Top Hotel Choices</h4>
+            <p>Where every stay feels like home, only better!</p>
+        </div>
+    </div>
+</section>
+
+<section class="booking-section">
+    <div class="booking-left">
+        <p class="tagline">Fast & Easy</p>
+        <h2 class="title">Get Your Favourite Bookings</h2>
+
+        <div class="step">
+            <img src="~/imagesH/d1.png" alt="Choose" />
+            <div>
+               <a href="#" style="text-decoration: none;"><h4>Choose Destination</h4></a>
+                <p>Get Your Favorite Bookings - Choose Your Perfect Destination!</p>
+            </div>
+        </div>
+
+        <div class="step">
+            <img src="~/imagesH/d2.png" alt="Check" />
+            <div>
+               <a href="#" style="text-decoration: none;"> <h4>Check Availability</h4></a>
+                <p>Find Your Perfect Stay - Check Availability Today!</p>
+            </div>
+        </div>
+
+        <div class="step">
+            <img src="~/imagesH/d3.png" alt="Go" />
+            <div>
+                <a href=" #" style="text-decoration: none;"><h4 >Let's Go</h4></a>
+                <p>Find, Plan, Book - Your Ultimate Travel Companion.</p>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<section class="hero-banner">
+    <div class="overlay">
+        <div class="hero-text">
+            <h1>Let's Make Your<br><span>Next Holiday Amazing</span></h1>
+        </div>
+    </div>
+</section>
+
+<section class="hotels-section container">
+    <p class="section-tag">HOTELS</p>
+    <h2 class="section-title">We Provide You the Best Stays – Comfort, Luxury & Hospitality!</h2>
+    <p class="section-desc">
+        In the heart of every destination, we bring you unparalleled comfort and luxury, where every stay is filled with warmth and hospitality.
+        A place where the essence of service meets the tranquility of your journey, offering a seamless experience with every visit.
+    </p>
+    <a href="/api/hotel/index" class="view-packages-btn">View Hotels</a>
+
+   
+
+<!-- Trending Tour Packages -->
+<section class="trending container">
+    <p class="section-tag">TRENDY</p>
+    <h2 class="section-title">Our Trending Tour Packages</h2>
+    
+    <div class="tour-grid">
+        <!-- Card 1 -->
+        <div class="tour-card">
+            <img src="~/imagesH/manali.png" alt="Manali">
+            <div class="tour-info">
+                <p><i class="fas fa-calendar-alt"></i> 8 Days</p>
+                <p><i class="fas fa-users"></i> 250 People Going</p>
+            </div>
+            <h3>Manali</h3>
+            <p><i class="fas fa-map-marker-alt"></i> India</p>
+            <div class="price">
+                <strong>11,000₹</strong> <del>12,000₹</del>
+                <div class="stars">★★★★★</div>
+            </div>
+            <p class="description">Amidst the Himalayas, where the breeze whispers adventure...</p>
+            <a class="explore-btn" href="/Tour/Index">Explore Now</a>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="tour-card">
+            <img src="~/imagesH/udaipur.png" alt="Udaipur">
+            <div class="tour-info">
+                <p><i class="fas fa-calendar-alt"></i> 8 Days</p>
+                <p><i class="fas fa-users"></i> 300 People Going</p>
+            </div>
+            <h3>Udaipur</h3>
+            <p><i class="fas fa-map-marker-alt"></i> India</p>
+            <div class="price">
+                <strong>10,500₹</strong> <del>11,000₹</del>
+                <div class="stars">★★★★★</div>
+            </div>
+            <p class="description">In the embrace of history and royalty, where lakes whisper tales of grace...</p>
+            <a class="explore-btn"  href="/Tour/Index">Explore Now</a>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="tour-card">
+            <img src="~/imagesH/goa.png" alt="Goa">
+            <div class="tour-info">
+                <p><i class="fas fa-calendar-alt"></i> 8 Days</p>
+                <p><i class="fas fa-users"></i> 155 People Going</p>
+            </div>
+            <h3>Goa</h3>
+            <p><i class="fas fa-map-marker-alt"></i> India</p>
+            <div class="price">
+                <strong>10,000₹</strong> <del>11,000₹</del>
+                <div class="stars">★★★★★</div>
+            </div>
+            <p class="description">The tranquility of the sea and the warmth of the sun in Goa...</p>
+            <a class="explore-btn" href="/Tour/Index">Explore Now</a>
+        </div>
+    </div>
+</section>
+

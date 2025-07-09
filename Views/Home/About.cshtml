@@ -1,0 +1,207 @@
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Destiny Wander</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            /* Terra Cotta Color Palette */
+            --primary: #DF6951;
+            --primary-100: #F9E2DD;
+            --primary-200: #F2C5BB;
+            --primary-300: #EBA799;
+            --primary-400: #E58A77;
+            --primary-600: #C85E47;
+            --primary-700: #B1533D;
+            --primary-800: #9A4833;
+            --white: #FFFFFF;
+            --light-100: #FDF9F8;
+            --light-200: #FAF3F2;
+            --light-300: #F5EDEB;
+            --gray-400: #D7CECB;
+            --gray-500: #A89B97;
+            --gray-600: #796A65;
+            --dark-700: #4A3D39;
+            --dark-800: #2E2522;
+            --dark-900: #1A1210;
+            --border-radius-sm: 6px;
+            --border-radius-md: 12px;
+            --border-radius-lg: 20px;
+            --shadow-sm: 0 2px 8px rgba(46, 42, 40, 0.08);
+            --shadow-md: 0 4px 16px rgba(46, 42, 40, 0.12);
+            --shadow-lg: 0 8px 24px rgba(46, 42, 40, 0.16);
+            --transition-fast: 0.15s ease;
+            --transition-normal: 0.3s ease;
+            --transition-slow: 0.5s ease;
+        }
+
+        /* Custom Tailwind utilities */
+        .bg-primary { background-color: var(--primary); }
+        .bg-primary-100 { background-color: var(--primary-100); }
+        .bg-primary-200 { background-color: var(--primary-200); }
+        .bg-primary-600 { background-color: var(--primary-600); }
+        .text-primary { color: var(--primary); }
+        .text-primary-600 { color: var(--primary-600); }
+        .text-dark-700 { color: var(--dark-700); }
+        .text-dark-800 { color: var(--dark-800); }
+        .border-light-300 { border-color: var(--light-300); }
+        .border-primary-200 { border-color: var(--primary-200); }
+        .shadow-sm { box-shadow: var(--shadow-sm); }
+        .shadow-md { box-shadow: var(--shadow-md); }
+        .shadow-lg { box-shadow: var(--shadow-lg); }
+        .transition-normal { transition: var(--transition-normal); }
+
+        /* Gradient for headers and buttons */
+        .gradient-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-600) 100%);
+        }
+
+        /* Header overlay */
+       
+        footer {
+        font-family: 'Poppins', sans-serif;
+    }
+       
+
+        /* Ensure Poppins font */
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-light-100 text-dark-800 font-poppins antialiased min-h-screen">
+    <!-- Header Section -->
+    <header class="relative h-64 sm:h-96 header-overlay fade-in">
+        <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=2070&auto=format&fit=crop" alt="Travel destination" class="absolute inset-0 w-full h-full object-cover object-center">
+        <!-- Navbar -->
+        <nav class="relative z-20 container mx-auto px-4 sm:px-6 flex items-center justify-between py-4">
+            <div class="text-2xl font-bold text-white">Destiny Wander</div>
+            <div class="hidden md:flex space-x-6">
+                <a href="@Url.Action("Index", "Home")" class="text-white hover:text-primary-200 transition-normal flex items-center" aria-label="Navigate to home"><i class="fas fa-home mr-1"></i> Home</a>
+                <a href="@Url.Action("AboutUs", "Home")" class="text-white hover:text-primary-200 transition-normal flex items-center" aria-label="Learn about us"><i class="fas fa-info-circle mr-1"></i> About</a>
+                <a href="@Url.Action("Index", "Tour")" class="text-white hover:text-primary-200 transition-normal flex items-center" aria-label="Explore upcoming packages"><i class="fas fa-suitcase mr-1"></i> Upcoming Packages</a>
+            </div>
+            <button class="md:hidden text-white focus:outline-none" id="menu-toggle" aria-label="Toggle navigation menu">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+        </nav>
+        <!-- Mobile Menu -->
+        <div class="hidden md:hidden bg-dark-900 bg-opacity-90 absolute top-16 left-0 w-full z-20" id="mobile-menu">
+            <div class="flex flex-col items-center space-y-4 py-4">
+                <a href="@Url.Action("Index", "Home")" class="text-white hover:text-primary-200 transition-normal flex items-center" aria-label="Navigate to home"><i class="fas fa-home mr-1"></i> Home</a>
+                <a href="@Url.Action("AboutUs", "Home")" class="text-white hover:text-primary-200 transition-normal flex items-center" aria-label="Learn about us"><i class="fas fa-info-circle mr-1"></i> About</a>
+                <a href="#" class="text-white hover:text-primary-200 transition-normal flex items-center" aria-label="View our services"><i class="fas fa-concierge-bell mr-1"></i> Services</a>
+                <a href="@Url.Action("Index", "Tour")" class="text-white hover:text-primary-200 transition-normal flex items-center" aria-label="Explore upcoming packages"><i class="fas fa-suitcase mr-1"></i> Upcoming Packages</a>
+            </div>
+        </div>
+        <!-- Header Content -->
+        <div class="relative z-20 flex flex-col items-center justify-center h-full text-center text-white">
+            <h1 class="text-3xl sm:text-5xl font-bold mb-2 fade-in">About TravelWithUs</h1>
+            <p class="text-lg sm:text-xl fade-in">Your Journey Begins Here</p>
+        </div>
+    </header>
+
+    <!-- Content Section -->
+    <main class="container mx-auto px-4 sm:px-6 max-w-6xl py-12">
+        <!-- Who We Are -->
+        <section class="bg-white rounded-md shadow-md p-6 sm:p-8 mb-8 fade-in">
+            <h2 class="text-2xl sm:text-3xl font-bold text-dark-800 mb-4 flex items-center"><i class="fas fa-users text-primary mr-2"></i> Who We Are</h2>
+            <div class="h-1 bg-gradient-to-r from-primary to-primary-600 rounded-full mb-6 w-32"></div>
+            <p class="text-dark-700 text-base sm:text-lg leading-relaxed mb-4">
+                TravelWithUs was founded with a dream – to make traveling not just easy, but extraordinary. Whether you're dreaming of relaxing on a sunny beach, exploring hidden gems, or experiencing new cultures, we're here to make those dreams a reality.
+            </p>
+            <p class="text-dark-700 text-base sm:text-lg leading-relaxed">
+                With years of experience and a deep love for travel, we curate personalized travel experiences that are unforgettable. We believe that travel isn't just about the destination; it's about the journey, the people you meet, and the memories you create along the way.
+            </p>
+        </section>
+
+        <!-- Our Mission -->
+        <section class="bg-primary-100 rounded-md shadow-md p-6 sm:p-8 mb-8 fade-in">
+            <h2 class="text-2xl sm:text-3xl font-bold text-dark-800 mb-4 flex items-center"><i class="fas fa-bullseye text-primary mr-2"></i> Our Mission</h2>
+            <div class="h-1 bg-gradient-to-r from-primary to-primary-600 rounded-full mb-6 w-32"></div>
+            <p class="text-dark-700 text-base sm:text-lg leading-relaxed">
+                To inspire, connect, and empower travelers to explore the world with ease, comfort, and excitement. We strive to offer exceptional travel experiences while maintaining a commitment to customer satisfaction and sustainability.
+            </p>
+        </section>
+
+        <!-- Meet Our Team -->
+        <section class="bg-white rounded-md shadow-md p-6 sm:p-8 fade-in">
+            <h2 class="text-2xl sm:text-3xl font-bold text-dark-800 mb-4 flex items-center"><i class="fas fa-user-tie text-primary mr-2"></i> Meet Our Team</h2>
+            <div class="h-1 bg-gradient-to-r from-primary to-primary-600 rounded-full mb-6 w-32"></div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                @{
+                    var teamMembers = new[]
+                    {
+                        new { Name = "Mistry Rajvi", Role = "Founder & CEO", Image = "https://via.placeholder.com/100" },
+                        new { Name = "Dhruvi Jingar", Role = "Travel Expert", Image = "https://via.placeholder.com/100" },
+                        new { Name = "Janu Gohil", Role = "Tour Manager", Image = "https://via.placeholder.com/100" }
+                    };
+                }
+                @foreach (var member in teamMembers)
+                {
+                    <div class="bg-white rounded-md shadow-md p-4 text-center transition-normal hover:shadow-lg hover:scale-105 fade-in" aria-label="Learn about @member.Name">
+                        <h3 class="text-lg sm:text-xl font-bold text-primary-600">@member.Name</h3>
+                        <p class="text-dark-700 text-sm sm:text-base">@member.Role</p>
+                    </div>
+                }
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-dark-900 text-white py-12 fade-in">
+    <div class="container mx-auto px-4 sm:px-6 max-w-6xl">
+        <div class="flex flex-col md:flex-row justify-between gap-8">
+            <!-- Brand -->
+            <div class="flex-1">
+                <h2 class="text-2xl font-bold">Destiny Wander<span class="text-primary"></span></h2>
+                <p class="text-gray-400 text-sm mt-2">Travel helps companies manage payments easily.</p>
+                <div class="flex space-x-4 mt-4">
+                    <a href="#" aria-label="Visit our LinkedIn page"><i class="fab fa-linkedin-in text-white hover:text-primary-200 text-xl transition-normal"></i></a>
+                    <a href="#" aria-label="Visit our Instagram page"><i class="fab fa-instagram text-white hover:text-primary-200 text-xl transition-normal"></i></a>
+                </div>
+            </div>
+            <!-- Company Links -->
+            <div class="flex-1">
+                <h4 class="text-lg font-semibold text-white mb-4">Company</h4>
+                <ul class="space-y-2">
+                    <li><a href="@Url.Action("Index", "Home")" class="text-gray-400 hover:text-primary-200 transition-normal" aria-label="Navigate to home">Home</a></li>
+                    <li><a href="@Url.Action("AboutUs", "Home")" class="text-gray-400 hover:text-primary-200 transition-normal" aria-label="Learn about us">About Us</a></li>
+                    <li><a href="@Url.Action("Index", "Tour")" class="text-gray-400 hover:text-primary-200 transition-normal" aria-label="Explore holiday packages">Holiday Package</a></li>
+                </ul>
+            </div>
+            <!-- Destinations Links -->
+            <div class="flex-1">
+                <h4 class="text-lg font-semibold text-white mb-4">Destinations</h4>
+                <ul class="space-y-2">
+                    <li><a href="@Url.Action("Manali", "Hotel")" class="text-gray-400 hover:text-primary-200 transition-normal" aria-label="View hotels in Manali">Manali</a></li>
+                    <li><a href="@Url.Action("Udaipur", "Hotel")" class="text-gray-400 hover:text-primary-200 transition-normal" aria-label="View hotels in Udaipur">Udaipur</a></li>
+                    <li><a href="@Url.Action("Goa", "Hotel")" class="text-gray-400 hover:text-primary-200 transition-normal" aria-label="View hotels in Goa">Goa</a></li>
+                    <li><a href="@Url.Action("Delhi", "Hotel")" class="text-gray-400 hover:text-primary-200 transition-normal" aria-label="View hotels in Delhi">Delhi</a></li>
+                </ul>
+            </div>
+        </div>
+        <hr class="border-gray-600 my-8">
+        <div class="text-center">
+            <p class="text-gray-400 text-sm">© 2025 Destiny Wander. All Rights Reserved.</p>
+        </div>
+    </div>
+</footer>
+   
+    <!-- JavaScript for Mobile Menu -->
+    <script>
+        // Mobile Menu Toggle
+        document.getElementById('menu-toggle').addEventListener('click', () => {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        });
+    </script>
+</body>
+</html>

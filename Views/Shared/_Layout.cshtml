@@ -1,0 +1,110 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - TravelWebsite</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+
+     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/TravelWebsite.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <!-- Custom Hero Navbar -->
+    <div class="hero">
+        <div class="navbar">
+            <div class="logo">Destiny Wander</div>
+            <ul class="nav-links">
+                <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+                <li><a asp-controller="Home" asp-action="About">About</a></li>
+                <li><a asp-controller="Tour" asp-action="Index">Holiday Package</a></li>
+   @if (User.Identity.IsAuthenticated)
+{
+    var firstChar = User.Identity.Name?.FirstOrDefault().ToString().ToUpper();
+
+    <li class="profile-menu">
+        <div class="avatar-circle" title="Profile">@firstChar</div>
+
+        <div class="dropdown-content">
+            <p><strong>@User.Identity.Name</strong></p>
+            <p>@User.FindFirst("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress")?.Value</p>
+            <form asp-controller="Account" asp-action="Logout" method="post" style="margin-top:10px;">
+                <button type="submit" class="logout-btn">Logout</button>
+            </form>
+        </div>
+    </li>
+}
+else
+{
+    <li><a asp-controller="Account" asp-action="SignUp">Sign Up</a></li>
+    <li><a asp-controller="Account" asp-action="Login" class="login-btn">Login</a></li>
+}
+
+
+            </ul>
+        </div>
+
+        <div class="transport-box">
+            <a href="/api/flight"><img src="~/imagesH/flight.png" alt="Flights" /><p style="color:black">Flights</p></a>
+            <a href="/api/hotel/index"><img src="~/imagesH/hotel.png" alt="Hotels" /><p style="color:black">Hotels</p></a>
+            <a href="/Tour/Index" style="width: 150px;"><img src="~/imagesH/package.png" alt="Holiday Packages" /><p style="color:black">Holiday Packages</p></a>
+            <a href="#"><img src="~/imagesH/train.png" alt="Trains" /><p style="color:black">Trains</p></a>
+            <a href="#"><img src="~/imagesH/bus.png" alt="Bus" /><p style="color:black">Bus</p></a>
+            <a href="/api/taxi"><img src="~/imagesH/taxi.png" alt="Taxi" /><p style="color:black">Taxi</p></a>
+        </div>
+        <div class="travel">
+            <p class="a1" style= "color:white">BEST Destinations AROUND THE WORLD</p>
+            <h1 class="a2">Travel, enjoy and live a new and full life</h1>
+        </div>
+    </div>
+
+    <!-- Page Content -->
+     <main>
+        @RenderBody()
+    </main>
+ 
+<footer class="site-footer">
+    <div class="footer-container">
+        <div class="footer-column">
+            <h2 class="footer-brand">Destiny Wander</h2>
+            <p class="footer-desc">Travel helps companies<br> manage payments easily.</p>
+            <div class="footer-socials">
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+        </div>
+
+        <div class="footer-column">
+            <h4>Company</h4>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About Us</a></li>
+                <li><a href="/Package/Index">Holiday Package</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-column">
+            <h4>Destinations</h4>
+            <ul>
+                <li><a href="/destinations/manali">Manali</a></li>
+                <li><a href="/destinations/udaipur">Udaipur</a></li>
+                <li><a href="/destinations/goa">Goa</a></li>
+                <li><a href="/destinations/delhi">Delhi</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>Destiny Wander@2025. All Rights Reserved.</p>
+    </div>
+</footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

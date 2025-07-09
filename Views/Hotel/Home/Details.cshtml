@@ -1,0 +1,230 @@
+@model backend.Hotel.Models.HotelViewModel
+@using Newtonsoft.Json.Linq
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Details - @Model.Name</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            /* Terra Cotta Color Palette */
+            --primary: #DF6951;
+            --primary-100: #F9E2DD;
+            --primary-200: #F2C5BB;
+            --primary-300: #EBA799;
+            --primary-400: #E58A77;
+            --primary-600: #C85E47;
+            --primary-700: #B1533D;
+            --primary-800: #9A4833;
+            --white: #FFFFFF;
+            --light-100: #FDF9F8;
+            --light-200: #FAF3F2;
+            --light-300: #F5EDEB;
+            --gray-400: #D7CECB;
+            --gray-500: #A89B97;
+            --gray-600: #796A65;
+            --dark-700: #4A3D39;
+            --dark-800: #2E2522;
+            --dark-900: #1A1210;
+            --border-radius-sm: 6px;
+            --border-radius-md: 12px;
+            --border-radius-lg: 20px;
+            --shadow-sm: 0 2px 8px rgba(46, 42, 40, 0.08);
+            --shadow-md: 0 4px 16px rgba(46, 42, 40, 0.12);
+            --shadow-lg: 0 8px 24px rgba(46, 42, 40, 0.16);
+            --transition-fast: 0.15s ease;
+            --transition-normal: 0.3s ease;
+            --transition-slow: 0.5s ease;
+        }
+
+        /* Custom Tailwind utilities */
+        .bg-primary { background-color: var(--primary); }
+        .bg-primary-100 { background-color: var(--primary-100); }
+        .bg-primary-200 { background-color: var(--primary-200); }
+        .bg-primary-300 { background-color: var(--primary-300); }
+        .bg-primary-600 { background-color: var(--primary-600); }
+        .text-primary { color: var(--primary); }
+        .text-primary-600 { color: var(--primary-600); }
+        .text-primary-700 { color: var(--primary-700); }
+        .text-primary-800 { color: var(--primary-800); }
+        .text-dark-700 { color: var(--dark-700); }
+        .text-dark-800 { color: var(--dark-800); }
+        .border-primary-200 { border-color: var(--primary-200); }
+        .border-light-300 { border-color: var(--light-300); }
+        .shadow-sm { box-shadow: var(--shadow-sm); }
+        .shadow-md { box-shadow: var(--shadow-md); }
+        .shadow-lg { box-shadow: var(--shadow-lg); }
+        .transition-normal { transition: var(--transition-normal); }
+
+        /* Gradient for headers and buttons */
+        .gradient-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-600) 100%);
+        }
+
+        /* Fade-in animation */
+      
+        /* FAQ toggle */
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        .faq-item.active .faq-answer {
+            max-height: 500px; /* Adjust based on content */
+        }
+    </style>
+</head>
+<body class="bg-light-100 text-dark-800 font-poppins antialiased min-h-screen py-12">
+    <div class="max-w-3xl mx-auto bg-white rounded-lg shadow-md overflow-hidden transition-normal hover:shadow-lg fade-in">
+        <!-- Hotel Name -->
+        <div class="p-6 border-b border-light-300">
+            <h1 class="text-3xl font-bold text-dark-800">@Model.Name</h1>
+            <div class="h-1 bg-gradient-to-r from-primary to-primary-600 rounded-full mt-2 w-24"></div>
+        </div>
+
+        <!-- Image -->
+        <div class="px-6 py-4">
+            <img src="@Model.ImageUrl" alt="@Model.Name" class="w-full h-64 sm:h-96 object-cover rounded-lg shadow-sm transition-normal hover:scale-105 fade-in">
+        </div>
+
+        <!-- Quick Info -->
+        <div class="px-6 py-4">
+            <p class="text-dark-700 mb-2"><i class="fas fa-map-marker-alt text-primary mr-2"></i><strong>Address:</strong> @Model.Address</p>
+            <p class="text-dark-700 mb-2"><i class="fas fa-star text-primary mr-2"></i><strong>Rating:</strong> @Model.Rating (@Model.ReviewCount reviews)</p>
+            <p class="text-dark-700"><i class="fas fa-rupee-sign text-primary mr-2"></i><strong>Price:</strong> ₹@Model.PricePerNight <span class="text-gray-500">+ ₹180 taxes</span></p>
+        </div>
+
+        <!-- Highlight Badges -->
+        <div class="px-6 py-4 flex space-x-4">
+            <span class="bg-primary-100 text-primary-600 px-3 py-1 rounded-full text-sm font-medium"><i class="fas fa-check mr-1"></i> Free Cancellation</span>
+            <span class="bg-primary-200 text-primary-800 px-3 py-1 rounded-full text-sm font-medium"><i class="fas fa-fire mr-1"></i> Popular Pick</span>
+        </div>
+
+        <!-- Facilities -->
+        <div class="px-6 py-4">
+            <h3 class="text-xl font-semibold text-dark-800 mb-4"><i class="fas fa-hotel text-primary mr-2"></i> Information and Facilities</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-dark-700">
+                <div><i class="fas fa-swimming-pool mr-2"></i> Swimming pool</div>
+                <div><i class="fas fa-wifi mr-2"></i> Wireless connectivity</div>
+                <div><i class="fas fa-baby-carriage mr-2"></i> No cribs (infant beds) available</div>
+                <div><i class="fas fa-parking mr-2"></i> Parking</div>
+                <div><i class="fas fa-wheelchair mr-2"></i> Accessibility</div>
+                <div><i class="fas fa-utensils mr-2"></i> Restaurant</div>
+                <div><i class="fas fa-laptop mr-2"></i> Computer</div>
+                <div><i class="fas fa-tshirt mr-2"></i> Dry cleaning</div>
+                <div><i class="fas fa-bell mr-2"></i> Bell staff/porter</div>
+            </div>
+        </div>
+
+        <!-- Nearby Places -->
+        <div class="px-6 py-4">
+            <h3 class="text-xl font-semibold text-dark-800 mb-4"><i class="fas fa-map-pin text-primary mr-2"></i> Nearby Attractions</h3>
+            <ul class="list-none text-dark-700 space-y-2">
+                <li><i class="fas fa-check text-primary mr-2"></i> 1.2 km to Calangute Beach</li>
+                <li><i class="fas fa-check text-primary mr-2"></i> 0.8 km to Max Shopping Mall</li>
+                <li><i class="fas fa-check text-primary mr-2"></i> 3.0 km to Goa Airport</li>
+            </ul>
+        </div>
+
+        <!-- Reviews -->
+        <div class="px-6 py-4">
+            <h3 class="text-xl font-semibold text-dark-800 mb-4"><i class="fas fa-comment-dots text-primary mr-2"></i> Guest Reviews</h3>
+            <div class="border-t border-light-300 pt-4">
+                <p class="text-dark-800 font-medium"><strong>Rahul S.</strong> <span class="text-primary">⭐⭐⭐⭐</span></p>
+                <p class="text-dark-700">“Great stay, clean rooms and awesome staff. Will come again!”</p>
+            </div>
+            <div class="border-t border-light-300 pt-4 mt-4">
+                <p class="text-dark-800 font-medium"><strong>Anjali P.</strong> <span class="text-primary">⭐⭐⭐⭐⭐</span></p>
+                <p class="text-dark-700">“Excellent location near beach and really good food!”</p>
+            </div>
+        </div>
+
+        <!-- Hotel Policies -->
+        <div class="px-6 py-4">
+            <h3 class="text-xl font-semibold text-dark-800 mb-4"><i class="fas fa-file-alt text-primary mr-2"></i> Hotel Policies</h3>
+            <ul class="list-none text-dark-700 space-y-2">
+                <li><i class="fas fa-check text-primary mr-2"></i> Check-in: 12:00 PM</li>
+                <li><i class="fas fa-check text-primary mr-2"></i> Check-out: 11:00 AM</li>
+                <li><i class="fas fa-id-card text-primary mr-2"></i> ID proof required</li>
+                <li><i class="fas fa-ban text-primary mr-2"></i> Pets not allowed</li>
+            </ul>
+        </div>
+
+        <!-- FAQs -->
+        <div class="px-6 py-4">
+            <h3 class="text-xl font-semibold text-dark-800 mb-4"><i class="fas fa-question-circle text-primary mr-2"></i> FAQs</h3>
+            <div class="space-y-4">
+                <div class="faq-item bg-primary-100 p-4 rounded-md border border-primary-200 cursor-pointer" onclick="toggleFaq(this)">
+                    <h4 class="text-lg font-medium text-dark-800 flex justify-between items-center">
+                        Does the hotel offer airport pickup?
+                        <i class="fas fa-chevron-down text-primary"></i>
+                    </h4>
+                    <div class="faq-answer text-sm text-dark-700 mt-2">
+                        Yes, on request with extra charges.
+                    </div>
+                </div>
+                <div class="faq-item bg-primary-100 p-4 rounded-md border border-primary-200 cursor-pointer" onclick="toggleFaq(this)">
+                    <h4 class="text-lg font-medium text-dark-800 flex justify-between items-center">
+                        Is breakfast included in price?
+                        <i class="fas fa-chevron-down text-primary"></i>
+                    </h4>
+                    <div class="faq-answer text-sm text-dark-700 mt-2">
+                        Only for Premium and Deluxe rooms.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Booking Form -->
+        <div class="px-6 py-8 bg-primary-100">
+            <h3 class="text-xl font-semibold text-dark-800 mb-4"><i class="fas fa-book text-primary mr-2"></i> Confirm Your Booking</h3>
+            <form method="post" action="@Url.Action("Booking", "Hotel")" class="space-y-6">
+                <input type="hidden" name="HotelId" value="@Model.Id" />
+                <div class="relative">
+                    <label class="block text-sm font-medium text-dark-700 mb-1">Name*</label>
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none top-6">
+                        <i class="fas fa-user text-gray-500"></i>
+                    </div>
+                    <input name="Name" required class="pl-10 w-full border border-light-300 rounded-md py-2.5 px-3 text-dark-700 focus:outline-none focus:ring-2 focus:ring-primary-200 focus:border-primary-400 transition-normal" />
+                </div>
+                <div class="relative">
+                    <label class="block text-sm font-medium text-dark-700 mb-1">Phone*</label>
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none top-6">
+                        <i class="fas fa-phone text-gray-500"></i>
+                    </div>
+                    <input name="Phone" required class="pl-10 w-full border border-light-300 rounded-md py-2.5 px-3 text-dark-700 focus:outline-none focus:ring-2 focus:ring-primary-200 focus:border-primary-400 transition-normal" />
+                </div>
+                <div class="relative">
+                    <label class="block text-sm font-medium text-dark-700 mb-1">Email*</label>
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none top-6">
+                        <i class="fas fa-envelope text-gray-500"></i>
+                    </div>
+                    <input name="Email" type="email" required class="pl-10 w-full border border-light-300 rounded-md py-2.5 px-3 text-dark-700 focus:outline-none focus:ring-2 focus:ring-primary-200 focus:border-primary-400 transition-normal" />
+                </div>
+                <button type="submit" class="gradient-primary text-white font-semibold py-3 px-6 rounded-md shadow-md hover:shadow-lg transition-normal transform hover:-translate-y-1 flex items-center" aria-label="Book hotel">
+                    <i class="fas fa-book mr-2"></i> Book Now
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // FAQ Toggle
+        function toggleFaq(element) {
+            element.classList.toggle('active');
+            const icon = element.querySelector('i');
+            icon.classList.toggle('fa-chevron-down');
+            icon.classList.toggle('fa-chevron-up');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,369 @@
+@model backend.Taxi.Models.PlaceModel
+@{
+    ViewData["Title"] = "Search Taxis";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <style>
+        :root {
+            /* Terra Cotta Color Palette */
+            --primary: #DF6951;
+            --primary-100: #F9E2DD;
+            --primary-200: #F2C5BB;
+            --primary-300: #EBA799;
+            --primary-400: #E58A77;
+            --primary-600: #C85E47;
+            --primary-700: #B1533D;
+            --primary-800: #9A4833;
+            --white: #FFFFFF;
+            --light-100: #FDF9F8;
+            --light-200: #FAF3F2;
+            --light-300: #F5EDEB;
+            --gray-400: #D7CECB;
+            --gray-500: #A89B97;
+            --gray-600: #796A65;
+            --dark-700: #4A3D39;
+            --dark-800: #2E2522;
+            --dark-900: #1A1210;
+            --border-radius-sm: 6px;
+            --border-radius-md: 12px;
+            --border-radius-lg: 20px;
+            --shadow-sm: 0 2px 8px rgba(46, 42, 40, 0.08);
+            --shadow-md: 0 4px 16px rgba(46, 42, 40, 0.12);
+            --shadow-lg: 0 8px 24px rgba(46, 42, 40, 0.16);
+            --transition-fast: 0.15s ease;
+            --transition-normal: 0.3s ease;
+            --transition-slow: 0.5s ease;
+        }
+
+        /* Custom Tailwind utilities */
+        .bg-primary { background-color: var(--primary); }
+        .bg-primary-100 { background-color: var(--primary-100); }
+        .bg-primary-200 { background-color: var(--primary-200); }
+        .bg-primary-300 { background-color: var(--primary-300); }
+        .bg-primary-600 { background-color: var(--primary-600); }
+        .text-primary { color: var(--primary); }
+        .text-primary-800 { color: var(--primary-800); }
+        .text-dark-700 { color: var(--dark-700); }
+        .text-dark-800 { color: var(--dark-800); }
+        .border-primary-300 { border-color: var(--primary-300); }
+        .shadow-sm { box-shadow: var(--shadow-sm); }
+        .shadow-md { box-shadow: var(--shadow-md); }
+        .shadow-lg { box-shadow: var(--shadow-lg); }
+        .transition-normal { transition: var(--transition-normal); }
+
+        /* Gradient for header */
+        .header-gradient {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-600) 100%);
+        }
+
+        /* Suggestion list styling */
+        .suggestion-item:hover {
+            background-color: var(--primary-100);
+            cursor: pointer;
+        }
+
+       
+
+   
+    </style>
+</head>
+<body class="bg-light-100 text-dark-800 font-sans antialiased min-h-screen">
+    <div class="container mx-auto px-4 py-10">
+        <!-- Search Form -->
+        <div class="bg-white rounded-lg shadow-lg p-6 sm:p-8 max-w-2xl mx-auto">
+            <div class="header-gradient p-4 rounded-md mb-6">
+                <h2 class="text-2xl sm:text-3xl font-bold text-white text-center">Search Taxis</h2>
+            </div>
+            <div class="space-y-6">
+                <!-- Pick-up Place -->
+                <div>
+                    <label for="pickUpPlaceInput" class="block text-sm font-medium text-dark-700 mb-1">Pick-up Location</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fas fa-map-marker-alt text-gray-400"></i>
+                        </div>
+                        <input type="text" id="pickUpPlaceInput" class="pl-10 w-full border border-light-300 rounded-md py-2.5 px-3 text-dark-700 focus:outline-none focus:ring-2 focus:ring-primary-200 focus:border-primary-400 transition-normal" placeholder="Type pick-up location..." autocomplete="off" />
+                    </div>
+                    <!-- Suggestions List for Pick-up Place -->
+                    <ul class="mt-2 bg-white border border-light-300 rounded-md shadow-sm max-h-60 overflow-y-auto" id="pickUpSuggestionsList"></ul>
+                </div>
+
+                <!-- Drop-off Place -->
+                <div>
+                    <label for="dropOffPlaceInput" class="block text-sm font-medium text-dark-700 mb-1">Drop-off Location</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fas fa-map-marker-alt text-gray-400"></i>
+                        </div>
+                        <input type="text" id="dropOffPlaceInput" class="pl-10 w-full border border-light-300 rounded-md py-2.5 px-3 text-dark-700 focus:outline-none focus:ring-2 focus:ring-primary-200 focus:border-primary-400 transition-normal" placeholder="Type drop-off location..." autocomplete="off" />
+                    </div>
+                    <!-- Suggestions List for Drop-off Place -->
+                    <ul class="mt-2 bg-white border border-light-300 rounded-md shadow-sm max-h-60 overflow-y-auto" id="dropOffSuggestionsList"></ul>
+                </div>
+
+                <!-- Pick-up Date and Time -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label for="pickUpDate" class="block text-sm font-medium text-dark-700 mb-1">Pick-up Date</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="far fa-calendar-alt text-gray-400"></i>
+                            </div>
+                            <input type="date" id="pickUpDate" class="pl-10 w-full border border-light-300 rounded-md py-2.5 px-3 text-dark-700 focus:outline-none focus:ring-2 focus:ring-primary-200 focus:border-primary-400 transition-normal" />
+                        </div>
+                    </div>
+                    <div>
+                        <label for="pickUpTime" class="block text-sm font-medium text-dark-700 mb-1">Pick-up Time</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="far fa-clock text-gray-400"></i>
+                            </div>
+                            <input type="time" id="pickUpTime" class="pl-10 w-full border border-light-300 rounded-md py-2.5 px-3 text-dark-700 focus:outline-none focus:ring-2 focus:ring-primary-200 focus:border-primary-400 transition-normal" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hidden inputs to store selected place data -->
+                <input type="hidden" id="selectedPickUpPlaceId" />
+                <input type="hidden" id="selectedDropOffPlaceId" />
+                <input type="hidden" id="selectedPickUpPlaceName" />
+                <input type="hidden" id="selectedDropOffPlaceName" />
+
+                <!-- Search Button -->
+                <button id="searchButton" class="w-full bg-primary hover:bg-primary-600 text-white font-semibold py-3 px-4 rounded-md shadow-md hover:shadow-lg transition-normal transform hover:-translate-y-1 disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center" disabled>
+                    <i class="fas fa-search mr-2"></i> Search
+                </button>
+            </div>
+        </div>
+
+        <!-- Taxi Search Results -->
+        <div id="taxiDetails" class="mt-10 hidden">
+            <h3 class="text-2xl font-bold text-dark-800 mb-6 text-center">Taxi Search Results</h3>
+            <div id="taxiInfo" class="space-y-6"></div>
+        </div>
+    </div>
+
+    <script>
+        const pickUpPlaceInput = document.getElementById('pickUpPlaceInput');
+        const dropOffPlaceInput = document.getElementById('dropOffPlaceInput');
+        const pickUpSuggestionsList = document.getElementById('pickUpSuggestionsList');
+        const dropOffSuggestionsList = document.getElementById('dropOffSuggestionsList');
+        const searchButton = document.getElementById('searchButton');
+        const pickUpDateInput = document.getElementById('pickUpDate');
+        const pickUpTimeInput = document.getElementById('pickUpTime');
+
+        let selectedPickUpPlace = null;
+        let selectedDropOffPlace = null;
+
+        // Handle input event for pick-up place
+        pickUpPlaceInput.addEventListener('input', async function () {
+            const query = pickUpPlaceInput.value.trim();
+            pickUpSuggestionsList.innerHTML = '';
+            selectedPickUpPlace = null;
+            updateSearchButtonState();
+
+            if (query.length < 2) {
+                return;
+            }
+
+            try {
+                const response = await axios.get(`/api/taxi/search?query=${encodeURIComponent(query)}`);
+                
+                if (response.data && response.data.length > 0) {
+                    response.data.forEach(place => {
+                        const listItem = document.createElement('li');
+                        listItem.classList.add('p-3', 'suggestion-item', 'text-dark-700', 'transition-normal');
+                        listItem.textContent = `${place.name} (${place.city}, ${place.country})`;
+                        listItem.addEventListener('click', () => selectPickUpPlace(place));
+                        pickUpSuggestionsList.appendChild(listItem);
+                    });
+                } else {
+                    pickUpSuggestionsList.innerHTML = '<li class="p-3 text-dark-700">No results found.</li>';
+                }
+            } catch (error) {
+                console.error('Error fetching pick-up suggestions:', error);
+            }
+        });
+
+        // Handle input event for drop-off place
+        dropOffPlaceInput.addEventListener('input', async function () {
+            const query = dropOffPlaceInput.value.trim();
+            dropOffSuggestionsList.innerHTML = '';
+            selectedDropOffPlace = null;
+            updateSearchButtonState();
+
+            if (query.length < 2) {
+                return;
+            }
+
+            try {
+                const response = await axios.get(`/api/taxi/search?query=${encodeURIComponent(query)}`);
+                
+                if (response.data && response.data.length > 0) {
+                    response.data.forEach(place => {
+                        const listItem = document.createElement('li');
+                        listItem.classList.add('p-3', 'suggestion-item', 'text-dark-700', 'transition-normal');
+                        listItem.textContent = `${place.name} (${place.city}, ${place.country})`;
+                        listItem.addEventListener('click', () => selectDropOffPlace(place));
+                        dropOffSuggestionsList.appendChild(listItem);
+                    });
+                } else {
+                    dropOffSuggestionsList.innerHTML = '<li class="p-3 text-dark-700">No results found.</li>';
+                }
+            } catch (error) {
+                console.error('Error fetching drop-off suggestions:', error);
+            }
+        });
+
+        // Function to handle selecting a pick-up place
+        function selectPickUpPlace(place) {
+            selectedPickUpPlace = place;
+            pickUpPlaceInput.value = place.name;
+            pickUpSuggestionsList.innerHTML = '';
+            document.getElementById('selectedPickUpPlaceId').value = place.googlePlaceId;
+            document.getElementById('selectedPickUpPlaceName').value = place.name;
+            updateSearchButtonState();
+        }
+
+        // Function to handle selecting a drop-off place
+        function selectDropOffPlace(place) {
+            selectedDropOffPlace = place;
+            dropOffPlaceInput.value = place.name;
+            dropOffSuggestionsList.innerHTML = '';
+            document.getElementById('selectedDropOffPlaceId').value = place.googlePlaceId;
+            document.getElementById('selectedDropOffPlaceName').value = place.name;
+            updateSearchButtonState();
+        }
+
+        // Update search button state
+        function updateSearchButtonState() {
+            searchButton.disabled = !(selectedPickUpPlace && selectedDropOffPlace && pickUpDateInput.value && pickUpTimeInput.value);
+        }
+
+        // Add input listeners for date and time
+        pickUpDateInput.addEventListener('input', updateSearchButtonState);
+        pickUpTimeInput.addEventListener('input', updateSearchButtonState);
+
+        // Handle search button click
+        searchButton.addEventListener('click', async function () {
+            if (!selectedPickUpPlace || !selectedDropOffPlace) {
+                alert('Please select both pick-up and drop-off locations.');
+                return;
+            }
+
+            const pickUpDate = pickUpDateInput.value;
+            const pickUpTime = pickUpTimeInput.value;
+
+            if (!pickUpDate || !pickUpTime) {
+                alert('Please select both pick-up date and time.');
+                return;
+            }
+
+            const requestData = {
+                PickUpPlaceId: selectedPickUpPlace.googlePlaceId,
+                DropOffPlaceId: selectedDropOffPlace.googlePlaceId,
+                PickUpDate: pickUpDate,
+                PickUpTime: pickUpTime
+            };
+
+            try {
+                const response = await axios.post('/api/taxi/get-details', requestData);
+
+                if (response.status === 200) {
+                    const taxiModel = response.data.data;
+                    const journeys = taxiModel.journeys;
+                    const results = taxiModel.results;
+
+                    const taxiDetailsDiv = document.getElementById('taxiDetails');
+                    const taxiInfoDiv = document.getElementById('taxiInfo');
+                    taxiInfoDiv.innerHTML = '';
+
+                    results.forEach((result, index) => {
+                        taxiInfoDiv.innerHTML += `
+                            <div class="bg-primary-100 p-6 rounded-lg border border-primary-300 shadow-md hover:shadow-lg transition-normal transform hover:scale-105 fade-in">
+                                <div class="header-gradient p-3 rounded-md mb-4 flex items-center">
+                                    <i class="fas fa-taxi text-white mr-2"></i>
+                                    <h4 class="text-lg font-semibold text-white">Option ${index + 1}: ${result.supplierName}</h4>
+                                </div>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                                    <div class="flex items-start">
+                                        <i class="fas fa-car text-primary mr-2 mt-1"></i>
+                                        <p class="text-dark-700"><strong>Vehicle Type:</strong> ${result.vehicleType}</p>
+                                    </div>
+                                    <div class="flex items-start">
+                                        <i class="fas fa-dollar-sign text-primary mr-2 mt-1"></i>
+                                        <p class="text-dark-700"><strong>Price:</strong> ${result.price.amount} ${result.price.currencyCode}</p>
+                                    </div>
+                                    <div class="flex items-start">
+                                        <i class="far fa-clock text-primary mr-2 mt-1"></i>
+                                        <p class="text-dark-700"><strong>Travel Time:</strong> ${result.duration} minutes</p>
+                                    </div>
+                                    <div class="flex items-start">
+                                        <i class="fas fa-map-marker-alt text-primary mr-2 mt-1"></i>
+                                        <p class="text-dark-700"><strong>Pick-up:</strong> ${journeys[0].pickupLocation.name}</p>
+                                    </div>
+                                    <div class="flex items-start">
+                                        <i class="fas fa-map-marker-alt text-primary mr-2 mt-1"></i>
+                                        <p class="text-dark-700"><strong>Drop-off:</strong> ${journeys[0].dropOffLocation.name}</p>
+                                    </div>
+                                </div>
+                                <button class="w-full bg-primary hover:bg-primary-600 text-white font-semibold py-3 px-4 rounded-md shadow-md hover:shadow-lg transition-normal transform hover:-translate-y-1"
+                                    onclick="bookNow(
+                                        '${result.resultId}', 
+                                        '${result.supplierName}', 
+                                        '${result.vehicleType}', 
+                                        '${result.price.amount}', 
+                                        '${result.price.currencyCode}', 
+                                        '${journeys[0].pickupLocation.name}', 
+                                        '${journeys[0].dropOffLocation.name}', 
+                                        '${result.duration}', 
+                                        '${journeys[0].requestedPickupDateTime}'
+                                    )">
+                                    <i class="fas fa-taxi mr-2"></i> Book Now
+                                </button>
+                            </div>
+                        `;
+                    });
+
+                    taxiDetailsDiv.classList.remove('hidden');
+                } else {
+                    alert('Something went wrong. Please try again.');
+                }
+            } catch (error) {
+                console.error('Error sending search request:', error);
+            }
+        });
+
+        async function bookNow(resultId, supplierName, vehicleType, priceAmount, currencyCode, pickupLocation, dropOffLocation, duration, dateTime) {
+            const requestData = {
+                ResultId: resultId,
+                supplierName: supplierName,
+                VehicleType: vehicleType,
+                PriceAmount: priceAmount,
+                PickupLocation: pickupLocation,
+                DropOffLocation: dropOffLocation,
+                Duration: duration,
+                PickUpDateTime: dateTime
+            };
+
+            try {
+                const response = await axios.post('/api/taxi/book', requestData);
+                console.log('Booking successful:', response.data);
+                window.location.href = response.data.redirectUrl;
+            } catch (error) {
+                console.error('Error during booking:', error.response ? error.response.data : error.message);
+            }
+        }
+    </script>
+</body>
+</html>
