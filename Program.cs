@@ -10,8 +10,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 
-builder.Configuration.AddJsonFile("appsettings.Secrets.json", optional: true, reloadOnChange: true);
-
 // -------- Mongo & App Services --------
 builder.Services.AddScoped<IMongoDbService, MongoDbService>();
 builder.Services.AddScoped<backend.Data.MongoDbContext>();

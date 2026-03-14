@@ -7,6 +7,5 @@
 **/*.suo
 **/*.sln.docstates
 **/*.log
-appsettings.Secrets.json
 build.log
 *.md
