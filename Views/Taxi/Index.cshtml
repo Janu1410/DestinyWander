@@ -1,19 +1,10 @@
 @model backend.Taxi.Models.PlaceModel
 @{
     ViewData["Title"] = "Search Taxis";
-    Layout = null;
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewData["Title"]</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <style>
+<style>
         :root {
             /* Terra Cotta Color Palette */
             --primary: #DF6951;
@@ -76,9 +67,8 @@
 
    
     </style>
-</head>
-<body class="bg-light-100 text-dark-800 font-sans antialiased min-h-screen">
-    <div class="container mx-auto px-4 py-10">
+
+<div class="container mx-auto px-4 py-10">
         <!-- Search Form -->
         <div class="bg-white rounded-lg shadow-lg p-6 sm:p-8 max-w-2xl mx-auto">
             <div class="header-gradient p-4 rounded-md mb-6">
@@ -161,6 +151,22 @@
         const searchButton = document.getElementById('searchButton');
         const pickUpDateInput = document.getElementById('pickUpDate');
         const pickUpTimeInput = document.getElementById('pickUpTime');
+        const isAuthenticated = window.dwIsAuthenticated === true || window.dwIsAuthenticated === "true";
+
+        const requireAuthForTaxiSearch = (message) => {
+            if (isAuthenticated) {
+                return true;
+            }
+
+            if (window.dwAuthPrompt) {
+                window.dwAuthPrompt(message || "Please sign up or log in to search taxis.");
+                return false;
+            }
+
+            const returnUrl = encodeURIComponent(window.location.pathname + window.location.search + window.location.hash);
+            window.location.href = `/Account/Login?returnUrl=${returnUrl}`;
+            return false;
+        };
 
         let selectedPickUpPlace = null;
         let selectedDropOffPlace = null;
@@ -177,6 +183,10 @@
             }
 
             try {
+                if (!requireAuthForTaxiSearch()) {
+                    return;
+                }
+
                 const response = await axios.get(`/api/taxi/search?query=${encodeURIComponent(query)}`);
                 
                 if (response.data && response.data.length > 0) {
@@ -191,6 +201,10 @@
                     pickUpSuggestionsList.innerHTML = '<li class="p-3 text-dark-700">No results found.</li>';
                 }
             } catch (error) {
+                if (error.response && error.response.status === 401) {
+                    requireAuthForTaxiSearch();
+                    return;
+                }
                 console.error('Error fetching pick-up suggestions:', error);
             }
         });
@@ -207,6 +221,10 @@
             }
 
             try {
+                if (!requireAuthForTaxiSearch()) {
+                    return;
+                }
+
                 const response = await axios.get(`/api/taxi/search?query=${encodeURIComponent(query)}`);
                 
                 if (response.data && response.data.length > 0) {
@@ -221,6 +239,10 @@
                     dropOffSuggestionsList.innerHTML = '<li class="p-3 text-dark-700">No results found.</li>';
                 }
             } catch (error) {
+                if (error.response && error.response.status === 401) {
+                    requireAuthForTaxiSearch();
+                    return;
+                }
                 console.error('Error fetching drop-off suggestions:', error);
             }
         });
@@ -256,6 +278,10 @@
 
         // Handle search button click
         searchButton.addEventListener('click', async function () {
+            if (!requireAuthForTaxiSearch("Please sign up or log in to search taxis.")) {
+                return;
+            }
+
             if (!selectedPickUpPlace || !selectedDropOffPlace) {
                 alert('Please select both pick-up and drop-off locations.');
                 return;
@@ -318,6 +344,8 @@
                                     </div>
                                 </div>
                                 <button class="w-full bg-primary hover:bg-primary-600 text-white font-semibold py-3 px-4 rounded-md shadow-md hover:shadow-lg transition-normal transform hover:-translate-y-1"
+                                    data-requires-auth="true"
+                                    data-auth-message="Please sign up or log in to continue with taxi booking."
                                     onclick="bookNow(
                                         '${result.resultId}', 
                                         '${result.supplierName}', 
@@ -340,6 +368,10 @@
                     alert('Something went wrong. Please try again.');
                 }
             } catch (error) {
+                if (error.response && error.response.status === 401) {
+                    requireAuthForTaxiSearch("Please sign up or log in to search taxis.");
+                    return;
+                }
                 console.error('Error sending search request:', error);
             }
         });
@@ -358,12 +390,31 @@
 
             try {
                 const response = await axios.post('/api/taxi/book', requestData);
+                if (response.status === 401) {
+                    if (window.dwAuthPrompt) {
+                        window.dwAuthPrompt("Please sign up or log in to continue with taxi booking.");
+                        return;
+                    }
+
+                    const returnUrl = encodeURIComponent(window.location.pathname + window.location.search + window.location.hash);
+                    window.location.href = `/Account/Login?returnUrl=${returnUrl}`;
+                    return;
+                }
                 console.log('Booking successful:', response.data);
                 window.location.href = response.data.redirectUrl;
             } catch (error) {
+                if (error.response && error.response.status === 401) {
+                    if (window.dwAuthPrompt) {
+                        window.dwAuthPrompt("Please sign up or log in to continue with taxi booking.");
+                        return;
+                    }
+
+                    const returnUrl = encodeURIComponent(window.location.pathname + window.location.search + window.location.hash);
+                    window.location.href = `/Account/Login?returnUrl=${returnUrl}`;
+                    return;
+                }
                 console.error('Error during booking:', error.response ? error.response.data : error.message);
             }
         }
     </script>
-</body>
-</html>
+

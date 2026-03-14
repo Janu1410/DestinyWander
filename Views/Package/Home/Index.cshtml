@@ -1,107 +1,43 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-    Layout = "~/Views/Package/Shared/_Layout.cshtml";
-}
-
 @model List<backend.Package.Models.TourPackage>
 
-@foreach (var item in Model)
-{
-    <div class="card mb-4">
-        <h4>@item.Title (@item.Duration)</h4>
-        <p>@item.Itinerary</p>
-        <p>Price: ₹@item.Price <del>₹@item.OriginalPrice</del> <strong>@item.DiscountLabel</strong></p>
+@{
+    ViewData["Title"] = "Featured Packages";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="container mx-auto px-4 sm:px-6 max-w-6xl py-8">
+    <div class="mb-8">
+        <h2 class="text-2xl sm:text-3xl font-bold text-dark-800">Featured Holiday Packages</h2>
+        <div class="h-1 bg-gradient-to-r from-primary to-primary-600 rounded-full mt-2 w-32"></div>
     </div>
-}
 
-<script> 
-document.querySelector('.search-btn').addEventListener('click', function() {
-    alert('Search functionality will be implemented soon!');
-});
-
-const destinations = [
-    { img: "./imagesP/kerala.jpg", name: "Kerala", price: "₹20,000", rating: "5.0" },
-    { img: "./imagesP/shimla.jpg", name: "Shimla", price: "₹15,000", rating: "4.9" },
-    { img: "./images/goa.jpg", name: "Goa", price: "₹30,000", rating: "4.9" },
-    { img: "./images/manali.jpg", name: "Manali", price: "₹11,000", rating: "4.2" },
-    { img: "./images/himachal.jpg", name: "Himachal", price: "₹17,000", rating: "4.9" },
-    { img: "./images/kashmir.jpg", name: "Kashmir", price: "₹35,000", rating: "4.5" },
-    { img: "./images/rajasthan.jpg", name: "Rajasthan", price: "₹16,000", rating: "4.9" },
-    { img: "./images/udaipur.jpg", name: "Udaipur", price: "₹25,000", rating: "4.6" },
-    { img: "./images/ladakh.jpg", name: "Ladakh", price: "₹15,000", rating: "4.7" },
-    { img: "./images/mysore.jpg", name: "Mysore", price: "₹18,000", rating: "4.8" },
-    { img: "./images/ooty.jpg", name: "Ooty", price: "₹22,000", rating: "4.7" },
-    { img: "./images/darjeeling.jpg", name: "Darjeeling", price: "₹19,000", rating: "4.6" }
-];
-
-const itemsPerPage = 6;
-let currentPage = 1;
-
-function renderDestinations() {
-    const grid = document.getElementById("destinationGrid");
-    grid.innerHTML = "";
-    
-    let start = (currentPage - 1) * itemsPerPage;
-    let end = start + itemsPerPage;
-    
-    let paginatedItems = destinations.slice(start, end);
-
-    paginatedItems.forEach(destination => {
-        const card = document.createElement("div");
-        card.classList.add("card");
-
-        card.innerHTML = `
-            <img src="${destination.img}" alt="${destination.name}">
-            <div class="card-content">
-                <h3>${destination.name}</h3>
-                <p>Starting At ${destination.price} Per Person</p>
-                <div class="rating">
-                    <span>⭐ ${destination.rating}</span>
-                </div>
-            </div>
-        `;
-
-        grid.appendChild(card);
-    });
-
-    updatePagination();
-}
-
-function updatePagination() {
-    const pageNumbers = document.getElementById("pageNumbers");
-    pageNumbers.innerHTML = "";
-    
-    const totalPages = Math.ceil(destinations.length / itemsPerPage);
-    
-    for (let i = 1; i <= totalPages; i++) {
-        let pageBtn = document.createElement("button");
-        pageBtn.textContent = i;
-        pageBtn.classList.add("page-btn");
-        
-        if (i === currentPage) {
-            pageBtn.style.fontWeight = "bold";
-            pageBtn.style.color = "red";
-        }
-        
-        pageBtn.onclick = () => {
-            currentPage = i;
-            renderDestinations();
-        };
-
-        pageNumbers.appendChild(pageBtn);
+    @if (Model != null && Model.Any())
+    {
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            @foreach (var item in Model)
+            {
+                <article class="bg-white rounded-md shadow-md overflow-hidden border border-primary-200 transition-normal hover:shadow-lg">
+                    <img src="@(item.ImageUrl ?? "https://via.placeholder.com/600x360")" alt="@(item.Title ?? "Tour package")" class="w-full h-48 object-cover" />
+                    <div class="p-4">
+                        <h3 class="text-lg font-bold text-dark-800 mb-2">@(item.Title ?? "Package")</h3>
+                        <p class="text-dark-700 text-sm mb-2">@item.Duration</p>
+                        <p class="text-dark-700 text-sm mb-4">@(item.Itinerary ?? "Itinerary details coming soon.")</p>
+                        <p class="text-dark-800 font-semibold mb-4">
+                            &#8377;@item.Price <del class="text-gray-500 font-normal">&#8377;@item.OriginalPrice</del>
+                            <span class="text-primary-600">@item.DiscountLabel</span>
+                        </p>
+                        <a href="@Url.Action("Details", "Tour", new { id = item.Id })" class="gradient-primary text-white font-semibold py-2 px-4 rounded-md inline-flex items-center">
+                            View Details
+                        </a>
+                    </div>
+                </article>
+            }
+        </div>
     }
-}
-
-function changePage(step) {
-    const totalPages = Math.ceil(destinations.length / itemsPerPage);
-    
-    if (currentPage + step > 0 && currentPage + step <= totalPages) {
-        currentPage += step;
-        renderDestinations();
+    else
+    {
+        <div class="bg-white rounded-md shadow-md border border-primary-200 p-6 text-dark-700">
+            No packages are available right now.
+        </div>
     }
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-    renderDestinations();
-});
-</script>
+</section>

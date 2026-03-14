@@ -26,6 +26,7 @@ public class TaxiController : Controller
         return View("~/Views/Taxi/Index.cshtml");
     }
 
+    [Authorize]
     [HttpGet("search")]
     public async Task<List<PlaceModel>> SearchTaxis(string query)
     {
@@ -41,6 +42,7 @@ public class TaxiController : Controller
         }
     }
 
+    [Authorize]
     [HttpPost("get-details")]
     public async Task<IActionResult> GetDetailsOfTaxi([FromBody] TaxiSearchRequest model)
     {
@@ -56,12 +58,14 @@ public class TaxiController : Controller
         }
     }
 
+    [Authorize]
     [HttpGet("payment")]
     public  async Task<IActionResult> Payment(string bookingId){
         var model = await _taxiBookingService.GetTaxiBookingByIdAsync(bookingId);
         return  View("~/Views/Taxi/Payment.cshtml" , model);
     }
 
+    [Authorize]
     [HttpGet("success")]
     public  async Task<IActionResult> Confirmation(string bookingId){
         var model = await _taxiBookingService.GetTaxiBookingByIdAsync(bookingId);

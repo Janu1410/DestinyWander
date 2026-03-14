@@ -1,20 +1,12 @@
-@model backend.Auth.Models.UserViewModel
+﻿@model backend.Auth.Models.UserViewModel
 
 @{
     ViewBag.Title = "Sign Up";
-    Layout = null;
+    ViewData["Title"] = "Sign Up";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up - Destiny Wander</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
+<style>
         :root {
             /* Terra Cotta Color Palette */
             --primary: #DF6951;
@@ -77,9 +69,8 @@
             font-family: 'Poppins', sans-serif;
         }
     </style>
-</head>
-<body class="bg-light-100 text-dark-800 font-poppins antialiased min-h-screen flex items-center justify-center py-12">
-    <div class="container mx-auto px-4 sm:px-6 max-w-lg">
+
+<div class="container mx-auto px-4 sm:px-6 max-w-lg">
         <div class="bg-white rounded-md shadow-md p-6 sm:p-8 border border-primary-200 fade-in">
             <h2 class="text-2xl sm:text-3xl font-bold text-dark-800 mb-2 text-center">Sign Up</h2>
             <p class="text-dark-700 text-center mb-6">Let's get you set up for your personal account.</p>
@@ -127,6 +118,7 @@
                             <i class="fas fa-lock text-gray-500"></i>
                         </div>
                         <input asp-for="Password" class="pl-10 w-full border border-light-300 rounded-md py-2.5 px-3 text-dark-700 focus:outline-none focus:ring-2 focus:ring-primary-200 focus:border-primary-400 transition-normal" placeholder="Password" type="password" />
+                        <p class="text-xs text-gray-500 mt-1">Use 10+ chars with uppercase, lowercase, number, and symbol.</p>
                         <span asp-validation-for="Password" class="text-red-600 text-sm mt-1 block"></span>
                     </div>
                     <div class="relative">
@@ -148,11 +140,6 @@
                         <i class="fas fa-user-plus mr-2"></i> Create Account
                     </button>
                 </div>
-                <div class="text-center">
-                    <a href="/Account/GoogleLogin" class="bg-red-600 text-white font-semibold py-2 px-6 rounded-md shadow-md hover:shadow-lg transition-normal inline-flex items-center w-full sm:w-auto justify-center mt-4" aria-label="Sign up with Google">
-                        <i class="fab fa-google mr-2"></i> Sign Up with Google
-                    </a>
-                </div>
                 <p class="text-center text-dark-700 text-sm mt-4">
                     Already have an account? <a asp-action="Login" asp-controller="Account" class="text-primary-600 hover:underline">Login</a>
                 </p>
@@ -166,5 +153,6 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
     }
-</body>
-</html>
+
+
+

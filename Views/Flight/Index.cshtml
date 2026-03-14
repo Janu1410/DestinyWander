@@ -1,20 +1,9 @@
 @{
     ViewData["Title"] = "Flight Search";
-    Layout = null;
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewData["Title"]</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <style>
+<style>
         :root {
             /* Terra Cotta Color Palette */
             --primary: #DF6951;
@@ -116,9 +105,8 @@
         .stop-dot.end { right: 0; }
         .stop-dot.intermediate { left: 50%; transform: translateX(-50%); }
     </style>
-</head>
-<body class="bg-light-100 text-dark-800 font-poppins antialiased min-h-screen">
-    <!-- Search Form -->
+
+<!-- Search Form -->
     <div class="py-10">
         <div class="container mx-auto px-4">
             <div class="bg-white rounded-lg shadow-lg p-6 sm:p-8 max-w-5xl mx-auto">
@@ -265,6 +253,22 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script>
         console.log("version 3");
+        const isAuthenticated = window.dwIsAuthenticated === true || window.dwIsAuthenticated === "true";
+
+        const requireAuthForFlightSearch = (message) => {
+            if (isAuthenticated) {
+                return true;
+            }
+
+            if (window.dwAuthPrompt) {
+                window.dwAuthPrompt(message || "Please sign up or log in to search flights.");
+                return false;
+            }
+
+            const returnUrl = encodeURIComponent(window.location.pathname + window.location.search + window.location.hash);
+            window.location.href = `/Account/Login?returnUrl=${returnUrl}`;
+            return false;
+        };
 
         // Initialize Flatpickr for date pickers
         document.addEventListener('DOMContentLoaded', () => {
@@ -328,6 +332,10 @@
         // Autocomplete Functionality
         async function fetchAutocompleteSuggestions(query) {
             try {
+                if (!requireAuthForFlightSearch()) {
+                    return [];
+                }
+
                 const encodedQuery = encodeURIComponent(query);
                 const response = await axios.get(`/api/flight/search-airport?query=${encodedQuery}`);
                 if (response.data.Success && Array.isArray(response.data.Data)) {
@@ -340,6 +348,10 @@
                 }
                 return [];
             } catch (error) {
+                if (error.response && error.response.status === 401) {
+                    requireAuthForFlightSearch();
+                    return [];
+                }
                 console.error('Failed to fetch autocomplete suggestions:', error);
                 return [];
             }
@@ -417,6 +429,10 @@
         async function searchFlights(event) {
             event.preventDefault();
 
+            if (!requireAuthForFlightSearch("Please sign up or log in to search flights.")) {
+                return;
+            }
+
             const fromInput = document.getElementById('fromInput');
             const toInput = document.getElementById('toInput');
             const flightType = document.getElementById('flightType').value;
@@ -453,6 +469,10 @@
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(requestData)
                 });
+                if (response.status === 401) {
+                    requireAuthForFlightSearch("Please sign up or log in to search flights.");
+                    return;
+                }
                 const result = await response.json();
                 console.log(result);
                 displayFlights(result.Data);
@@ -607,6 +627,10 @@
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(showFlightRequestedData)
                 });
+                if (response.status === 401) {
+                    requireAuthForFlightSearch("Please sign up or log in to view flight details.");
+                    return;
+                }
                 const result = await response.json();
                 if (result.redirectUrl) {
                     window.location.href = result.redirectUrl;
@@ -618,5 +642,4 @@
             }
         }
     </script>
-</body>
-</html>
+

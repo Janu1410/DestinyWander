@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace backend.Controllers;
 
-// [Authorize]
+[Authorize]
 [Route("api/[controller]")]
 [ApiController]
 public class BookController : Controller
@@ -34,7 +34,6 @@ public class BookController : Controller
         return View("BookingForm", model);
     }
 
-    [Authorize]
     [HttpPost("submit-booking")]
     public async Task<IActionResult> SubmitBooking([FromBody] FlightBookingModel model)
     {

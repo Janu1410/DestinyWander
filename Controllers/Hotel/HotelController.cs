@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Collections.Generic;
 using System.Linq;
 using backend.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace backend.Hotel.Controllers
 {   
@@ -54,6 +55,7 @@ namespace backend.Hotel.Controllers
         [HttpGet("Shimla")]
         public IActionResult Shimla() => View("~/views/Hotel/Home/Shimla.cshtml",GetHotelsInShimla());
 
+        [Authorize]
         [HttpGet("details")]
         public IActionResult Details(int id)
         {
@@ -67,6 +69,7 @@ namespace backend.Hotel.Controllers
 
         
 
+        [Authorize]
         [HttpGet("search-city")]
         public IActionResult SearchCity(string location)
         {
@@ -93,6 +96,7 @@ namespace backend.Hotel.Controllers
             }
         }
 
+        [Authorize]
         [HttpGet("search-hotel")]
         public List<HotelViewModel> GetHotelsByCityName(string cityName)
         {
@@ -173,6 +177,7 @@ namespace backend.Hotel.Controllers
                 private List<HotelViewModel> GetHotelsInJaipur() => GetHotelsFromCoordinates(26.9124, 75.7873);
                 private List<HotelViewModel> GetHotelsInShimla() => GetHotelsFromCoordinates(31.1048, 77.1734);
 
+        [Authorize]
         [HttpPost("book-hotel")]
 public IActionResult Booking([FromForm] Booking model)
 {

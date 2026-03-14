@@ -24,6 +24,9 @@ namespace backend.Auth.Models
         public string Phone { get; set; }
 
         [Required(ErrorMessage = "Password is required")]
+        [StringLength(64, MinimumLength = 10, ErrorMessage = "Password must be between 10 and 64 characters.")]
+        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d]).{10,64}$",
+            ErrorMessage = "Password must include uppercase, lowercase, number, and special character.")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
 

@@ -1,5 +1,6 @@
 using backend.Models;
 using backend.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 
@@ -29,6 +30,7 @@ namespace backend.Controllers
         public IActionResult FlightBooking(){
             return View();
         }
+        [Authorize]
         [HttpGet("flight-data")]
        public IActionResult GetFlightDetailsView()
 {
@@ -123,6 +125,7 @@ namespace backend.Controllers
 }
 
 
+        [Authorize]
         [HttpGet("search-airport")]
         public async Task<IActionResult> SearchAirport([FromQuery] string query)
         {
@@ -130,6 +133,7 @@ namespace backend.Controllers
             return Ok(result);
         }
 
+        [Authorize]
         [HttpPost("search-flight")]
         public async Task<IActionResult> SearchFlights([FromBody] SearchFlightsRequest request)
         {
@@ -137,6 +141,7 @@ namespace backend.Controllers
             return Ok(result);
         }
 
+        [Authorize]
         [HttpPost("get-flight-details")]
         public async Task<IActionResult> GetFlightDetails([FromBody] GetFlightDetailsRequest request)
         {

@@ -2,17 +2,10 @@
 @model backend.Taxi.Models.TaxiBooking
 @{
     ViewData["Title"] = "Taxi Booking Confirmation";
-    Layout = null;
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewData["Title"]</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
+<style>
         :root {
             /* Terra Cotta Color Palette */
             --primary: #DF6951;
@@ -65,9 +58,8 @@
             background: linear-gradient(135deg, var(--primary) 0%, var(--primary-600) 100%);
         }
     </style>
-</head>
-<body class="bg-light-100 text-dark-800 font-sans antialiased">
-    <div class="container mx-auto px-4 py-10">
+
+<div class="container mx-auto px-4 py-10">
         <div class="flex justify-center">
             <div class="w-full max-w-2xl">
                 <div class="bg-white rounded-lg shadow-lg transform transition-transform duration-500 hover:scale-105">
@@ -116,5 +108,4 @@
             </div>
         </div>
     </div>
-</body>
-</html>
+

@@ -1,9 +1,14 @@
 using backend.Taxi.Models;
+using System;
 using System.Net.Http;
 using System.Text.Json;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-namespace backend.Services;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+
+namespace backend.Services
+{
 
 public interface ITaxiService
 {
@@ -104,5 +109,6 @@ public async Task<string> SearchTaxiAsync(TaxiSearchRequest request)
 
    
 
-    
 }
+}
+

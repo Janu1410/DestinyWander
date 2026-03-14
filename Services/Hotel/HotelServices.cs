@@ -17,14 +17,18 @@ namespace backend.Hotel.Services
     {
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly ILogger<HotelService> _logger;
-        private const string ApiKey = "f108f7264cmsh98b32fd0fa26d1cp1a558ejsn2eae95ea3358";
-        private const string ApiHost = "booking-com.p.rapidapi.com";
+        private readonly string _apiKey;
+        private readonly string _apiHost;
 
-        public HotelService(IHttpClientFactory httpClientFactory, ILogger<HotelService> logger)
+        public HotelService(IHttpClientFactory httpClientFactory, ILogger<HotelService> logger, IConfiguration configuration)
         {
             _httpClientFactory = httpClientFactory;
             _logger = logger;
+            _apiKey = configuration["HotelApi:ApiKey"] ?? "YOUR_HOTEL_API_KEY";
+            _apiHost = configuration["HotelApi:ApiHost"] ?? "booking-com.p.rapidapi.com";
         }
+
+
 
         public async Task<IEnumerable<HotelResult>> SearchHotelsAsync(
             DateTime checkIn,
@@ -43,8 +47,8 @@ namespace backend.Hotel.Services
                     RequestUri = new Uri(BuildApiUrl(checkIn, checkOut, rooms, location)),
                     Headers =
                     {
-                        { "X-RapidAPI-Host", ApiHost },
-                        { "X-RapidAPI-Key", ApiKey },
+                        { "X-RapidAPI-Host", _apiHost },
+                        { "X-RapidAPI-Key", _apiKey },
                     },
                 };
 

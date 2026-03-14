@@ -1,20 +1,12 @@
-@model List<backend.Hotel.Models.HotelViewModel>
+﻿@model List<backend.Hotel.Models.HotelViewModel>
 
 @{
     ViewBag.Title = "Popular Hotels in Jaipur";
-    Layout = null;
+    ViewData["Title"] = "Popular Hotels in Jaipur";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
+<style>
         :root {
             /* Terra Cotta Color Palette */
             --primary: #DF6951;
@@ -69,9 +61,8 @@
 
        
     </style>
-</head>
-<body class="bg-light-100 text-dark-800 font-poppins antialiased min-h-screen py-12">
-    <div class="container mx-auto px-4 max-w-6xl">
+
+<div class="container mx-auto px-4 max-w-6xl">
         <!-- Header -->
         <div class="mb-8 fade-in">
             <h2 class="text-3xl font-bold text-dark-800">Popular Hotels in Jaipur</h2>
@@ -92,11 +83,11 @@
                                 <h3 class="text-xl font-bold text-dark-800">@hotel.Name</h3>
                                 <ul class="list-none p-0 text-sm text-dark-700">
                                     <li><i class="fas fa-check text-primary mr-2"></i> Free Cancellation till check-in</li>
-                                    <li><i class="fas fa-check text-primary mr-2"></i> Book with ₹0 Payment</li>
+                                    <li><i class="fas fa-check text-primary mr-2"></i> Book with &#8377;0 Payment</li>
                                 </ul>
                                 <p class="text-sm text-gray-500 truncate max-w-xs overflow-hidden whitespace-nowrap">@hotel.Address...</p>
                                 <div class="bg-primary-100 text-primary-800 px-3 py-2 rounded-md mt-2 text-sm font-medium">
-                                    <i class="fas fa-tag mr-1"></i> Flat ₹200 Off
+                                    <i class="fas fa-tag mr-1"></i> Flat &#8377;200 Off
                                 </div>
                             </div>
                         </div>
@@ -109,9 +100,9 @@
                             </div>
                             <p class="text-xs text-gray-500">(@(hotel.ReviewCount ) Ratings)</p>
                             <div class="mt-2">
-                                <p class="text-sm text-gray-500 line-through">₹@((hotel.PricePerNight + 200).ToString("0"))</p>
-                                <p class="text-xl font-bold text-dark-800">₹@hotel.PricePerNight.ToString("0")</p>
-                                <p class="text-xs text-gray-600">+ ₹180 taxes & fees<br>Per Night</p>
+                                <p class="text-sm text-gray-500 line-through">&#8377;@((hotel.PricePerNight + 200).ToString("0"))</p>
+                                <p class="text-xl font-bold text-dark-800">&#8377;@hotel.PricePerNight.ToString("0")</p>
+                                <p class="text-xs text-gray-600">+ &#8377;180 taxes & fees<br>Per Night</p>
                             </div>
                             <a href="@Url.Action("Details", "Hotel", new { id = hotel.Id })" class="gradient-primary text-white font-semibold py-2 px-4 rounded-md mt-4 inline-flex items-center shadow-md hover:shadow-lg transition-normal transform hover:-translate-y-1" aria-label="Book @hotel.Name">
                                 <i class="fas fa-book mr-2"></i> Book Now
@@ -126,5 +117,7 @@
             <p class="text-dark-700 text-center w-full sm:w-3/4 lg:w-2/3 mx-auto fade-in">No hotels found.</p>
         }
     </div>
-</body>
-</html>
+
+
+
+

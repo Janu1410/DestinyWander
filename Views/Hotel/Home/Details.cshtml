@@ -1,20 +1,11 @@
-@model backend.Hotel.Models.HotelViewModel
+﻿@model backend.Hotel.Models.HotelViewModel
 @using Newtonsoft.Json.Linq
 
 @{
-    Layout = null;
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hotel Details - @Model.Name</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
+<style>
         :root {
             /* Terra Cotta Color Palette */
             --primary: #DF6951;
@@ -82,9 +73,8 @@
             max-height: 500px; /* Adjust based on content */
         }
     </style>
-</head>
-<body class="bg-light-100 text-dark-800 font-poppins antialiased min-h-screen py-12">
-    <div class="max-w-3xl mx-auto bg-white rounded-lg shadow-md overflow-hidden transition-normal hover:shadow-lg fade-in">
+
+<div class="max-w-3xl mx-auto bg-white rounded-lg shadow-md overflow-hidden transition-normal hover:shadow-lg fade-in">
         <!-- Hotel Name -->
         <div class="p-6 border-b border-light-300">
             <h1 class="text-3xl font-bold text-dark-800">@Model.Name</h1>
@@ -100,7 +90,7 @@
         <div class="px-6 py-4">
             <p class="text-dark-700 mb-2"><i class="fas fa-map-marker-alt text-primary mr-2"></i><strong>Address:</strong> @Model.Address</p>
             <p class="text-dark-700 mb-2"><i class="fas fa-star text-primary mr-2"></i><strong>Rating:</strong> @Model.Rating (@Model.ReviewCount reviews)</p>
-            <p class="text-dark-700"><i class="fas fa-rupee-sign text-primary mr-2"></i><strong>Price:</strong> ₹@Model.PricePerNight <span class="text-gray-500">+ ₹180 taxes</span></p>
+            <p class="text-dark-700"><i class="fas fa-rupee-sign text-primary mr-2"></i><strong>Price:</strong> &#8377;@Model.PricePerNight <span class="text-gray-500">+ &#8377;180 taxes</span></p>
         </div>
 
         <!-- Highlight Badges -->
@@ -139,12 +129,12 @@
         <div class="px-6 py-4">
             <h3 class="text-xl font-semibold text-dark-800 mb-4"><i class="fas fa-comment-dots text-primary mr-2"></i> Guest Reviews</h3>
             <div class="border-t border-light-300 pt-4">
-                <p class="text-dark-800 font-medium"><strong>Rahul S.</strong> <span class="text-primary">⭐⭐⭐⭐</span></p>
-                <p class="text-dark-700">“Great stay, clean rooms and awesome staff. Will come again!”</p>
+                <p class="text-dark-800 font-medium"><strong>Rahul S.</strong> <span class="text-primary">&#9733;&#9733;&#9733;&#9733;</span></p>
+                <p class="text-dark-700">&ldquo;Great stay, clean rooms and awesome staff. Will come again!&rdquo;</p>
             </div>
             <div class="border-t border-light-300 pt-4 mt-4">
-                <p class="text-dark-800 font-medium"><strong>Anjali P.</strong> <span class="text-primary">⭐⭐⭐⭐⭐</span></p>
-                <p class="text-dark-700">“Excellent location near beach and really good food!”</p>
+                <p class="text-dark-800 font-medium"><strong>Anjali P.</strong> <span class="text-primary">&#9733;&#9733;&#9733;&#9733;&#9733;</span></p>
+                <p class="text-dark-700">&ldquo;Excellent location near beach and really good food!&rdquo;</p>
             </div>
         </div>
 
@@ -187,7 +177,7 @@
         <!-- Booking Form -->
         <div class="px-6 py-8 bg-primary-100">
             <h3 class="text-xl font-semibold text-dark-800 mb-4"><i class="fas fa-book text-primary mr-2"></i> Confirm Your Booking</h3>
-            <form method="post" action="@Url.Action("Booking", "Hotel")" class="space-y-6">
+            <form method="post" action="@Url.Action("Booking", "Hotel")" class="space-y-6" data-requires-auth="true" data-auth-message="Please sign up or log in to complete hotel booking.">
                 <input type="hidden" name="HotelId" value="@Model.Id" />
                 <div class="relative">
                     <label class="block text-sm font-medium text-dark-700 mb-1">Name*</label>
@@ -226,5 +216,5 @@
             icon.classList.toggle('fa-chevron-up');
         }
     </script>
-</body>
-</html>
+
+

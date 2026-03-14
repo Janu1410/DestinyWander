@@ -1,18 +1,10 @@
 @model backend.Taxi.Models.TaxiBooking
 @{
     ViewData["Title"] = "Taxi Payment";
-    Layout = null;
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewData["Title"]</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
+<style>
         :root {
             /* Terra Cotta Color Palette */
             --primary: #DF6951;
@@ -65,9 +57,8 @@
             background: linear-gradient(135deg, var(--primary) 0%, var(--primary-600) 100%);
         }
     </style>
-</head>
-<body class="bg-light-100 min-h-screen flex items-center justify-center p-4 sm:p-6">
-    <div class="max-w-md w-full">
+
+<div class="container mx-auto px-4 sm:px-6 max-w-md w-full py-8">
         <!-- Payment Card -->
         <div class="bg-white rounded-lg shadow-lg overflow-hidden transform transition-transform duration-500 hover:scale-105">
             <!-- Card Header -->
@@ -189,5 +180,4 @@
             }
         }
     </script>
-</body>
-</html>
+

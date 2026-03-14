@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Newtonsoft.Json;
 using backend.Package.Models;
 using backend.Package.Services; // ✅ Import the service namespace
@@ -6,6 +7,7 @@ using System.IO;
 
 namespace  backend.Package.Controllers
 {
+    [Authorize]
     public class PaymentController : Controller
     {
         private readonly IWebHostEnvironment _env;
