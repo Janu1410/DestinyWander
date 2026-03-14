@@ -11,13 +11,12 @@ namespace  backend.Package.Controllers
     public class PaymentController : Controller
     {
         private readonly IWebHostEnvironment _env;
-        private readonly BookingService _bookingService; // ✅ BookingService object
+        private readonly BookingService _bookingService;
 
-        // ✅ KEEP ONLY THIS CONSTRUCTOR
-        public PaymentController(IWebHostEnvironment env)
+        public PaymentController(IWebHostEnvironment env, BookingService bookingService)
         {
             _env = env;
-            _bookingService = new BookingService(); // ✅ Initialize BookingService manually
+            _bookingService = bookingService;
         }
 
         [HttpGet]

@@ -566,6 +566,7 @@ C:\Users\DELL\OneDrive\Desktop\Projects\DestinyWander\obj\Debug\net9.0\refint\ba
 C:\Users\DELL\OneDrive\Desktop\Projects\DestinyWander\obj\Debug\net9.0\backend.pdb
 C:\Users\DELL\OneDrive\Desktop\Projects\DestinyWander\obj\Debug\net9.0\backend.genruntimeconfig.cache
 C:\Users\DELL\OneDrive\Desktop\Projects\DestinyWander\obj\Debug\net9.0\ref\backend.dll
-C:\Users\DELL\OneDrive\Desktop\Projects\DestinyWander\obj\Debug\net9.0\compressed\jt1hm7z5lp-o38q3kxw39.gz
 C:\Users\DELL\OneDrive\Desktop\Projects\DestinyWander\bin\Debug\net9.0\backend.exe
-C:\Users\DELL\OneDrive\Desktop\Projects\DestinyWander\obj\Debug\net9.0\compressed\di562wezpl-pq94wgemri.gz
+C:\Users\DELL\OneDrive\Desktop\Projects\DestinyWander\bin\Debug\net9.0\appsettings.Secrets.json
+C:\Users\DELL\OneDrive\Desktop\Projects\DestinyWander\obj\Debug\net9.0\compressed\jt1hm7z5lp-j98o54y7cs.gz
+C:\Users\DELL\OneDrive\Desktop\Projects\DestinyWander\obj\Debug\net9.0\compressed\di562wezpl-qh6mm4rcqu.gz

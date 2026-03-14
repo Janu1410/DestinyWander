@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using backend.Data;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Configuration;
 
 namespace backend.Hotel.Controllers
 {   
@@ -15,11 +16,15 @@ namespace backend.Hotel.Controllers
     {
         // Store all loaded hotels in memory with assigned IDs
         private readonly MongoDbContext _context;
+        private readonly string _hotelApiKey;
+        private readonly string _hotelApiHost;
         private static List<HotelViewModel> _allHotels = new List<HotelViewModel>();
         private static int _hotelIdCounter = 1;
 
-        public HotelController(){
-            _context = new MongoDbContext();
+        public HotelController(MongoDbContext context, IConfiguration configuration){
+            _context = context;
+            _hotelApiKey = configuration["HotelApi:ApiKey"] ?? string.Empty;
+            _hotelApiHost = configuration["HotelApi:ApiHost"] ?? "booking-com.p.rapidapi.com";
         }
 
         [HttpGet("index")]
@@ -109,8 +114,8 @@ namespace backend.Hotel.Controllers
                 Method = HttpMethod.Get,
                 RequestUri = new Uri($"https://booking-com.p.rapidapi.com/v1/hotels/locations?name={Uri.EscapeDataString(cityName)}&locale=en-gb")
             };
-            locRequest.Headers.Add("x-rapidapi-host", "booking-com.p.rapidapi.com");
-            locRequest.Headers.Add("x-rapidapi-key", "3c088213e4msh02fd257f45141dap19594ajsn6564251585a0");
+            locRequest.Headers.Add("x-rapidapi-host", _hotelApiHost);
+            locRequest.Headers.Add("x-rapidapi-key", _hotelApiKey);
 
             var locResponse = client.SendAsync(locRequest).Result;
             var locJson = locResponse.Content.ReadAsStringAsync().Result;
@@ -131,8 +136,8 @@ namespace backend.Hotel.Controllers
                 Method = HttpMethod.Get,
                 RequestUri = new Uri($"https://booking-com.p.rapidapi.com/v1/hotels/search-by-coordinates?children_ages=5%2C0&page_number=0&categories_filter_ids=class%3A%3A2%2Cclass%3A%3A4%2Cfree_cancellation%3A%3A1&units=metric&adults_number=2&locale=en-gb&longitude={lon}&latitude={lat}&children_number=2&room_number=1&checkin_date=2025-10-13&include_adjacency=true&filter_by_currency=AED&order_by=popularity&checkout_date=2025-10-14")
             };
-            hotelRequest.Headers.Add("x-rapidapi-host", "booking-com.p.rapidapi.com");
-            hotelRequest.Headers.Add("x-rapidapi-key", "3c088213e4msh02fd257f45141dap19594ajsn6564251585a0");
+            hotelRequest.Headers.Add("x-rapidapi-host", _hotelApiHost);
+            hotelRequest.Headers.Add("x-rapidapi-key", _hotelApiKey);
 
             var hotelResponse = client.SendAsync(hotelRequest).Result;
             var hotelJson = hotelResponse.Content.ReadAsStringAsync().Result;
@@ -203,8 +208,8 @@ public IActionResult Booking([FromForm] Booking model)
                     RequestUri = new Uri($"https://booking-com.p.rapidapi.com/v1/hotels/search-by-coordinates?children_ages=5%2C0&include_adjacency=true&adults_number=2&checkout_date=2025-09-26&filter_by_currency=INR&checkin_date=2025-09-25&categories_filter_ids=class%3A%3A2%2Cclass%3A%3A4%2Cfree_cancellation%3A%3A1&units=metric&order_by=popularity&children_number=2&locale=en-gb&page_number=0&room_number=1&latitude={latitude}&longitude={longitude}"),
                     Headers =
                     {
-                        { "x-rapidapi-host", "booking-com.p.rapidapi.com" },
-                        { "x-rapidapi-key", "3c088213e4msh02fd257f45141dap19594ajsn6564251585a0" }
+                        { "x-rapidapi-host", _hotelApiHost },
+                        { "x-rapidapi-key", _hotelApiKey }
                     }
                 };
 

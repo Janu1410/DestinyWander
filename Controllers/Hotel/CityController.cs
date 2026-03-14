@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
+using Microsoft.Extensions.Configuration;
 
 namespace backend.Hotel.Controllers
 {
@@ -8,10 +9,14 @@ namespace backend.Hotel.Controllers
     public class CityController : ControllerBase
     {
         private readonly IHttpClientFactory _httpClientFactory;
+        private readonly string _hotelApiKey;
+        private readonly string _hotelApiHost;
 
-        public CityController(IHttpClientFactory httpClientFactory)
+        public CityController(IHttpClientFactory httpClientFactory, IConfiguration configuration)
         {
             _httpClientFactory = httpClientFactory;
+            _hotelApiKey = configuration["HotelApi:ApiKey"] ?? string.Empty;
+            _hotelApiHost = configuration["HotelApi:ApiHost"] ?? "booking-com.p.rapidapi.com";
         }
 
         [HttpGet("search")]
@@ -26,8 +31,8 @@ namespace backend.Hotel.Controllers
                 var request = new HttpRequestMessage(HttpMethod.Get,
                     $"https://booking-com.p.rapidapi.com/v1/hotels/locations?locale=en-gb&name={Uri.EscapeDataString(query)}");
 
-                request.Headers.Add("x-rapidapi-host", "booking-com.p.rapidapi.com");
-                request.Headers.Add("x-rapidapi-key", "11ada81770msh49c3dd7cea3fe53p178a8cjsn1e0020aab805");
+                request.Headers.Add("x-rapidapi-host", _hotelApiHost);
+                request.Headers.Add("x-rapidapi-key", _hotelApiKey);
 
                 var response = await client.SendAsync(request);
 

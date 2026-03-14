@@ -1,5 +1,6 @@
 using MongoDB.Driver;
 using backend.Hotel.Models;
+using Microsoft.Extensions.Configuration;
 
 namespace backend.Data
 {
@@ -7,11 +8,18 @@ namespace backend.Data
     {
         private readonly IMongoDatabase _database;
         
-        public MongoDbContext()
+        public MongoDbContext(IConfiguration configuration)
         {
-            // Replace this with your MongoDB connection string
-            var client = new MongoClient("mongodb://localhost:27017"); 
-            _database = client.GetDatabase("TravelWebsiteDb");
+            var connectionString = configuration["MongoDb:ConnectionString"];
+            var databaseName = configuration["MongoDb:DatabaseName"] ?? "TravelWebsiteDb";
+
+            if (string.IsNullOrWhiteSpace(connectionString))
+            {
+                throw new InvalidOperationException("MongoDB connection string is missing (MongoDb:ConnectionString).");
+            }
+
+            var client = new MongoClient(connectionString);
+            _database = client.GetDatabase(databaseName);
         }
 
         public IMongoCollection<Booking> Bookings => _database.GetCollection<Booking>("HotelBookings");

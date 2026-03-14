@@ -10,11 +10,15 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 
+builder.Configuration.AddJsonFile("appsettings.Secrets.json", optional: true, reloadOnChange: true);
+
 // -------- Mongo & App Services --------
 builder.Services.AddScoped<IMongoDbService, MongoDbService>();
+builder.Services.AddScoped<backend.Data.MongoDbContext>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IBookingService, BookingService>();
 builder.Services.AddScoped<ITaxiBookingService, TaxiBookingService>();
+builder.Services.AddScoped<backend.Package.Services.BookingService>();
 
 // -------- HttpClient: AirScrapper --------
 builder.Services.AddHttpClient("AirScrapperClient", client =>

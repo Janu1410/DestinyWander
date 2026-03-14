@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "XN5El9Q47FAnK/dS0D+AP0pwyUJO5cjy189dpFSqAns=",
+  "Hash": "I1rSFrkAX9Ff9QJvUAGM4N4ppRnipDydSZj3YOPcNfU=",
   "Source": "backend",
   "BasePath": "_content/backend",
   "Mode": "Default",
@@ -563,12 +563,12 @@
       "OriginalItemSpec": "C:\\Users\\DELL\\OneDrive\\Desktop\\Projects\\DestinyWander\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js.map"
     },
     {
-      "Identity": "C:\\Users\\DELL\\OneDrive\\Desktop\\Projects\\DestinyWander\\obj\\Debug\\net9.0\\compressed\\di562wezpl-pq94wgemri.gz",
+      "Identity": "C:\\Users\\DELL\\OneDrive\\Desktop\\Projects\\DestinyWander\\obj\\Debug\\net9.0\\compressed\\di562wezpl-qh6mm4rcqu.gz",
       "SourceId": "backend",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\DELL\\OneDrive\\Desktop\\Projects\\DestinyWander\\obj\\Debug\\net9.0\\compressed\\",
       "BasePath": "_content/backend",
-      "RelativePath": "js/site#[.{fingerprint=pq94wgemri}]?.js.gz",
+      "RelativePath": "js/site#[.{fingerprint=qh6mm4rcqu}]?.js.gz",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Alternative",
@@ -577,8 +577,8 @@
       "RelatedAsset": "C:\\Users\\DELL\\OneDrive\\Desktop\\Projects\\DestinyWander\\wwwroot\\js\\site.js",
       "AssetTraitName": "Content-Encoding",
       "AssetTraitValue": "gzip",
-      "Fingerprint": "fuzbiwkg8n",
-      "Integrity": "yWOgh4p/KjSItPqc0cY2q5Bt4N14BTNzb8/Jn8shTSE=",
+      "Fingerprint": "14wzzzilsx",
+      "Integrity": "r6Oml2BzoBaANeuY26adFsupk6rkW6u9cOMcn/nQ1yo=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "C:\\Users\\DELL\\OneDrive\\Desktop\\Projects\\DestinyWander\\wwwroot\\js\\site.js"
@@ -794,12 +794,12 @@
       "OriginalItemSpec": "C:\\Users\\DELL\\OneDrive\\Desktop\\Projects\\DestinyWander\\wwwroot\\js\\package.js"
     },
     {
-      "Identity": "C:\\Users\\DELL\\OneDrive\\Desktop\\Projects\\DestinyWander\\obj\\Debug\\net9.0\\compressed\\jt1hm7z5lp-o38q3kxw39.gz",
+      "Identity": "C:\\Users\\DELL\\OneDrive\\Desktop\\Projects\\DestinyWander\\obj\\Debug\\net9.0\\compressed\\jt1hm7z5lp-j98o54y7cs.gz",
       "SourceId": "backend",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\DELL\\OneDrive\\Desktop\\Projects\\DestinyWander\\obj\\Debug\\net9.0\\compressed\\",
       "BasePath": "_content/backend",
-      "RelativePath": "css/site#[.{fingerprint=o38q3kxw39}]?.css.gz",
+      "RelativePath": "css/site#[.{fingerprint=j98o54y7cs}]?.css.gz",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Alternative",
@@ -808,8 +808,8 @@
       "RelatedAsset": "C:\\Users\\DELL\\OneDrive\\Desktop\\Projects\\DestinyWander\\wwwroot\\css\\site.css",
       "AssetTraitName": "Content-Encoding",
       "AssetTraitValue": "gzip",
-      "Fingerprint": "2ly3jt83uw",
-      "Integrity": "KmeAQErXmG3kT2haT9gGnlYJcYtoChswdz6q78RFtlk=",
+      "Fingerprint": "it7thwo55a",
+      "Integrity": "KkIVsXXvzaOiWXVXBc01MlclrDkA6z/JzF/gXmVmo3Q=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "C:\\Users\\DELL\\OneDrive\\Desktop\\Projects\\DestinyWander\\wwwroot\\css\\site.css"
@@ -1711,8 +1711,8 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "o38q3kxw39",
-      "Integrity": "fJFrgjHZFFbsT26OezdHESSpKsA+4vKL/Zct2CvbSoI=",
+      "Fingerprint": "j98o54y7cs",
+      "Integrity": "KSvUFDfpa/XiW5jetvnYRA/pNFzKk0uIQYqh1n/QBhk=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\site.css"
@@ -3307,8 +3307,8 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "pq94wgemri",
-      "Integrity": "UcqAY1m0zIxRNh1yZo9oOfGgl3ruWOEN3//NTFq78J4=",
+      "Fingerprint": "qh6mm4rcqu",
+      "Integrity": "XuBhF7nfkwNTN1KlNnFNOchv7Y/aqqqQVRVwFS+0CFY=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\site.js"
@@ -6365,12 +6365,12 @@
     },
     {
       "Route": "css/site.css",
-      "AssetFile": "C:\\Users\\DELL\\OneDrive\\Desktop\\Projects\\DestinyWander\\obj\\Debug\\net9.0\\compressed\\jt1hm7z5lp-o38q3kxw39.gz",
+      "AssetFile": "C:\\Users\\DELL\\OneDrive\\Desktop\\Projects\\DestinyWander\\obj\\Debug\\net9.0\\compressed\\jt1hm7z5lp-j98o54y7cs.gz",
       "Selectors": [
         {
           "Name": "Content-Encoding",
           "Value": "gzip",
-          "Quality": "0.000193050193"
+          "Quality": "0.000192012289"
         }
       ],
       "ResponseHeaders": [
@@ -6380,15 +6380,15 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "5179"
+          "Value": "5207"
         },
         {
           "Name": "ETag",
-          "Value": "\"KmeAQErXmG3kT2haT9gGnlYJcYtoChswdz6q78RFtlk=\""
+          "Value": "\"KkIVsXXvzaOiWXVXBc01MlclrDkA6z/JzF/gXmVmo3Q=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Mar 2026 08:29:32 GMT"
+          "Value": "Sat, 14 Mar 2026 05:51:55 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -6408,13 +6408,13 @@
         },
         {
           "Name": "ETag",
-          "Value": "W/\"fJFrgjHZFFbsT26OezdHESSpKsA+4vKL/Zct2CvbSoI=\""
+          "Value": "W/\"KSvUFDfpa/XiW5jetvnYRA/pNFzKk0uIQYqh1n/QBhk=\""
         }
       ],
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-fJFrgjHZFFbsT26OezdHESSpKsA+4vKL/Zct2CvbSoI="
+          "Value": "sha256-KSvUFDfpa/XiW5jetvnYRA/pNFzKk0uIQYqh1n/QBhk="
         }
       ]
     },
@@ -6429,7 +6429,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "24162"
+          "Value": "24255"
         },
         {
           "Name": "Content-Type",
@@ -6437,11 +6437,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"fJFrgjHZFFbsT26OezdHESSpKsA+4vKL/Zct2CvbSoI=\""
+          "Value": "\"KSvUFDfpa/XiW5jetvnYRA/pNFzKk0uIQYqh1n/QBhk=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Mar 2026 08:29:32 GMT"
+          "Value": "Sat, 14 Mar 2026 05:51:55 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -6451,13 +6451,13 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-fJFrgjHZFFbsT26OezdHESSpKsA+4vKL/Zct2CvbSoI="
+          "Value": "sha256-KSvUFDfpa/XiW5jetvnYRA/pNFzKk0uIQYqh1n/QBhk="
         }
       ]
     },
     {
       "Route": "css/site.css.gz",
-      "AssetFile": "C:\\Users\\DELL\\OneDrive\\Desktop\\Projects\\DestinyWander\\obj\\Debug\\net9.0\\compressed\\jt1hm7z5lp-o38q3kxw39.gz",
+      "AssetFile": "C:\\Users\\DELL\\OneDrive\\Desktop\\Projects\\DestinyWander\\obj\\Debug\\net9.0\\compressed\\jt1hm7z5lp-j98o54y7cs.gz",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -6466,7 +6466,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "5179"
+          "Value": "5207"
         },
         {
           "Name": "Content-Type",
@@ -6474,11 +6474,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"KmeAQErXmG3kT2haT9gGnlYJcYtoChswdz6q78RFtlk=\""
+          "Value": "\"KkIVsXXvzaOiWXVXBc01MlclrDkA6z/JzF/gXmVmo3Q=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Mar 2026 08:29:32 GMT"
+          "Value": "Sat, 14 Mar 2026 05:51:55 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -6496,18 +6496,18 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-KmeAQErXmG3kT2haT9gGnlYJcYtoChswdz6q78RFtlk="
+          "Value": "sha256-KkIVsXXvzaOiWXVXBc01MlclrDkA6z/JzF/gXmVmo3Q="
         }
       ]
     },
     {
-      "Route": "css/site.o38q3kxw39.css",
-      "AssetFile": "C:\\Users\\DELL\\OneDrive\\Desktop\\Projects\\DestinyWander\\obj\\Debug\\net9.0\\compressed\\jt1hm7z5lp-o38q3kxw39.gz",
+      "Route": "css/site.j98o54y7cs.css",
+      "AssetFile": "C:\\Users\\DELL\\OneDrive\\Desktop\\Projects\\DestinyWander\\obj\\Debug\\net9.0\\compressed\\jt1hm7z5lp-j98o54y7cs.gz",
       "Selectors": [
         {
           "Name": "Content-Encoding",
           "Value": "gzip",
-          "Quality": "0.000193050193"
+          "Quality": "0.000192012289"
         }
       ],
       "ResponseHeaders": [
@@ -6517,15 +6517,15 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "5179"
+          "Value": "5207"
         },
         {
           "Name": "ETag",
-          "Value": "\"KmeAQErXmG3kT2haT9gGnlYJcYtoChswdz6q78RFtlk=\""
+          "Value": "\"KkIVsXXvzaOiWXVXBc01MlclrDkA6z/JzF/gXmVmo3Q=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Mar 2026 08:29:32 GMT"
+          "Value": "Sat, 14 Mar 2026 05:51:55 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -6545,13 +6545,13 @@
         },
         {
           "Name": "ETag",
-          "Value": "W/\"fJFrgjHZFFbsT26OezdHESSpKsA+4vKL/Zct2CvbSoI=\""
+          "Value": "W/\"KSvUFDfpa/XiW5jetvnYRA/pNFzKk0uIQYqh1n/QBhk=\""
         }
       ],
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "o38q3kxw39"
+          "Value": "j98o54y7cs"
         },
         {
           "Name": "label",
@@ -6559,12 +6559,12 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-fJFrgjHZFFbsT26OezdHESSpKsA+4vKL/Zct2CvbSoI="
+          "Value": "sha256-KSvUFDfpa/XiW5jetvnYRA/pNFzKk0uIQYqh1n/QBhk="
         }
       ]
     },
     {
-      "Route": "css/site.o38q3kxw39.css",
+      "Route": "css/site.j98o54y7cs.css",
       "AssetFile": "C:\\Users\\DELL\\OneDrive\\Desktop\\Projects\\DestinyWander\\wwwroot\\css\\site.css",
       "Selectors": [],
       "ResponseHeaders": [
@@ -6574,7 +6574,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "24162"
+          "Value": "24255"
         },
         {
           "Name": "Content-Type",
@@ -6582,11 +6582,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"fJFrgjHZFFbsT26OezdHESSpKsA+4vKL/Zct2CvbSoI=\""
+          "Value": "\"KSvUFDfpa/XiW5jetvnYRA/pNFzKk0uIQYqh1n/QBhk=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Mar 2026 08:29:32 GMT"
+          "Value": "Sat, 14 Mar 2026 05:51:55 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -6596,7 +6596,7 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "o38q3kxw39"
+          "Value": "j98o54y7cs"
         },
         {
           "Name": "label",
@@ -6604,13 +6604,13 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-fJFrgjHZFFbsT26OezdHESSpKsA+4vKL/Zct2CvbSoI="
+          "Value": "sha256-KSvUFDfpa/XiW5jetvnYRA/pNFzKk0uIQYqh1n/QBhk="
         }
       ]
     },
     {
-      "Route": "css/site.o38q3kxw39.css.gz",
-      "AssetFile": "C:\\Users\\DELL\\OneDrive\\Desktop\\Projects\\DestinyWander\\obj\\Debug\\net9.0\\compressed\\jt1hm7z5lp-o38q3kxw39.gz",
+      "Route": "css/site.j98o54y7cs.css.gz",
+      "AssetFile": "C:\\Users\\DELL\\OneDrive\\Desktop\\Projects\\DestinyWander\\obj\\Debug\\net9.0\\compressed\\jt1hm7z5lp-j98o54y7cs.gz",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -6619,7 +6619,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "5179"
+          "Value": "5207"
         },
         {
           "Name": "Content-Type",
@@ -6627,11 +6627,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"KmeAQErXmG3kT2haT9gGnlYJcYtoChswdz6q78RFtlk=\""
+          "Value": "\"KkIVsXXvzaOiWXVXBc01MlclrDkA6z/JzF/gXmVmo3Q=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Mar 2026 08:29:32 GMT"
+          "Value": "Sat, 14 Mar 2026 05:51:55 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -6649,7 +6649,7 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "o38q3kxw39"
+          "Value": "j98o54y7cs"
         },
         {
           "Name": "label",
@@ -6657,7 +6657,7 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-KmeAQErXmG3kT2haT9gGnlYJcYtoChswdz6q78RFtlk="
+          "Value": "sha256-KkIVsXXvzaOiWXVXBc01MlclrDkA6z/JzF/gXmVmo3Q="
         }
       ]
     },
@@ -14325,12 +14325,12 @@
     },
     {
       "Route": "js/site.js",
-      "AssetFile": "C:\\Users\\DELL\\OneDrive\\Desktop\\Projects\\DestinyWander\\obj\\Debug\\net9.0\\compressed\\di562wezpl-pq94wgemri.gz",
+      "AssetFile": "C:\\Users\\DELL\\OneDrive\\Desktop\\Projects\\DestinyWander\\obj\\Debug\\net9.0\\compressed\\di562wezpl-qh6mm4rcqu.gz",
       "Selectors": [
         {
           "Name": "Content-Encoding",
           "Value": "gzip",
-          "Quality": "0.001177856302"
+          "Quality": "0.000873362445"
         }
       ],
       "ResponseHeaders": [
@@ -14340,15 +14340,15 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "848"
+          "Value": "1144"
         },
         {
           "Name": "ETag",
-          "Value": "\"yWOgh4p/KjSItPqc0cY2q5Bt4N14BTNzb8/Jn8shTSE=\""
+          "Value": "\"r6Oml2BzoBaANeuY26adFsupk6rkW6u9cOMcn/nQ1yo=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 04 Mar 2026 06:51:20 GMT"
+          "Value": "Sat, 14 Mar 2026 05:55:18 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -14368,13 +14368,13 @@
         },
         {
           "Name": "ETag",
-          "Value": "W/\"UcqAY1m0zIxRNh1yZo9oOfGgl3ruWOEN3//NTFq78J4=\""
+          "Value": "W/\"XuBhF7nfkwNTN1KlNnFNOchv7Y/aqqqQVRVwFS+0CFY=\""
         }
       ],
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-UcqAY1m0zIxRNh1yZo9oOfGgl3ruWOEN3//NTFq78J4="
+          "Value": "sha256-XuBhF7nfkwNTN1KlNnFNOchv7Y/aqqqQVRVwFS+0CFY="
         }
       ]
     },
@@ -14389,7 +14389,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "2773"
+          "Value": "4157"
         },
         {
           "Name": "Content-Type",
@@ -14397,11 +14397,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"UcqAY1m0zIxRNh1yZo9oOfGgl3ruWOEN3//NTFq78J4=\""
+          "Value": "\"XuBhF7nfkwNTN1KlNnFNOchv7Y/aqqqQVRVwFS+0CFY=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 04 Mar 2026 06:51:20 GMT"
+          "Value": "Sat, 14 Mar 2026 05:55:18 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -14411,13 +14411,13 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-UcqAY1m0zIxRNh1yZo9oOfGgl3ruWOEN3//NTFq78J4="
+          "Value": "sha256-XuBhF7nfkwNTN1KlNnFNOchv7Y/aqqqQVRVwFS+0CFY="
         }
       ]
     },
     {
       "Route": "js/site.js.gz",
-      "AssetFile": "C:\\Users\\DELL\\OneDrive\\Desktop\\Projects\\DestinyWander\\obj\\Debug\\net9.0\\compressed\\di562wezpl-pq94wgemri.gz",
+      "AssetFile": "C:\\Users\\DELL\\OneDrive\\Desktop\\Projects\\DestinyWander\\obj\\Debug\\net9.0\\compressed\\di562wezpl-qh6mm4rcqu.gz",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -14426,7 +14426,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "848"
+          "Value": "1144"
         },
         {
           "Name": "Content-Type",
@@ -14434,11 +14434,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"yWOgh4p/KjSItPqc0cY2q5Bt4N14BTNzb8/Jn8shTSE=\""
+          "Value": "\"r6Oml2BzoBaANeuY26adFsupk6rkW6u9cOMcn/nQ1yo=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 04 Mar 2026 06:51:20 GMT"
+          "Value": "Sat, 14 Mar 2026 05:55:18 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -14456,18 +14456,18 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-yWOgh4p/KjSItPqc0cY2q5Bt4N14BTNzb8/Jn8shTSE="
+          "Value": "sha256-r6Oml2BzoBaANeuY26adFsupk6rkW6u9cOMcn/nQ1yo="
         }
       ]
     },
     {
-      "Route": "js/site.pq94wgemri.js",
-      "AssetFile": "C:\\Users\\DELL\\OneDrive\\Desktop\\Projects\\DestinyWander\\obj\\Debug\\net9.0\\compressed\\di562wezpl-pq94wgemri.gz",
+      "Route": "js/site.qh6mm4rcqu.js",
+      "AssetFile": "C:\\Users\\DELL\\OneDrive\\Desktop\\Projects\\DestinyWander\\obj\\Debug\\net9.0\\compressed\\di562wezpl-qh6mm4rcqu.gz",
       "Selectors": [
         {
           "Name": "Content-Encoding",
           "Value": "gzip",
-          "Quality": "0.001177856302"
+          "Quality": "0.000873362445"
         }
       ],
       "ResponseHeaders": [
@@ -14477,15 +14477,15 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "848"
+          "Value": "1144"
         },
         {
           "Name": "ETag",
-          "Value": "\"yWOgh4p/KjSItPqc0cY2q5Bt4N14BTNzb8/Jn8shTSE=\""
+          "Value": "\"r6Oml2BzoBaANeuY26adFsupk6rkW6u9cOMcn/nQ1yo=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 04 Mar 2026 06:51:20 GMT"
+          "Value": "Sat, 14 Mar 2026 05:55:18 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -14505,13 +14505,13 @@
         },
         {
           "Name": "ETag",
-          "Value": "W/\"UcqAY1m0zIxRNh1yZo9oOfGgl3ruWOEN3//NTFq78J4=\""
+          "Value": "W/\"XuBhF7nfkwNTN1KlNnFNOchv7Y/aqqqQVRVwFS+0CFY=\""
         }
       ],
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "pq94wgemri"
+          "Value": "qh6mm4rcqu"
         },
         {
           "Name": "label",
@@ -14519,12 +14519,12 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-UcqAY1m0zIxRNh1yZo9oOfGgl3ruWOEN3//NTFq78J4="
+          "Value": "sha256-XuBhF7nfkwNTN1KlNnFNOchv7Y/aqqqQVRVwFS+0CFY="
         }
       ]
     },
     {
-      "Route": "js/site.pq94wgemri.js",
+      "Route": "js/site.qh6mm4rcqu.js",
       "AssetFile": "C:\\Users\\DELL\\OneDrive\\Desktop\\Projects\\DestinyWander\\wwwroot\\js\\site.js",
       "Selectors": [],
       "ResponseHeaders": [
@@ -14534,7 +14534,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "2773"
+          "Value": "4157"
         },
         {
           "Name": "Content-Type",
@@ -14542,11 +14542,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"UcqAY1m0zIxRNh1yZo9oOfGgl3ruWOEN3//NTFq78J4=\""
+          "Value": "\"XuBhF7nfkwNTN1KlNnFNOchv7Y/aqqqQVRVwFS+0CFY=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 04 Mar 2026 06:51:20 GMT"
+          "Value": "Sat, 14 Mar 2026 05:55:18 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -14556,7 +14556,7 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "pq94wgemri"
+          "Value": "qh6mm4rcqu"
         },
         {
           "Name": "label",
@@ -14564,13 +14564,13 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-UcqAY1m0zIxRNh1yZo9oOfGgl3ruWOEN3//NTFq78J4="
+          "Value": "sha256-XuBhF7nfkwNTN1KlNnFNOchv7Y/aqqqQVRVwFS+0CFY="
         }
       ]
     },
     {
-      "Route": "js/site.pq94wgemri.js.gz",
-      "AssetFile": "C:\\Users\\DELL\\OneDrive\\Desktop\\Projects\\DestinyWander\\obj\\Debug\\net9.0\\compressed\\di562wezpl-pq94wgemri.gz",
+      "Route": "js/site.qh6mm4rcqu.js.gz",
+      "AssetFile": "C:\\Users\\DELL\\OneDrive\\Desktop\\Projects\\DestinyWander\\obj\\Debug\\net9.0\\compressed\\di562wezpl-qh6mm4rcqu.gz",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -14579,7 +14579,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "848"
+          "Value": "1144"
         },
         {
           "Name": "Content-Type",
@@ -14587,11 +14587,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"yWOgh4p/KjSItPqc0cY2q5Bt4N14BTNzb8/Jn8shTSE=\""
+          "Value": "\"r6Oml2BzoBaANeuY26adFsupk6rkW6u9cOMcn/nQ1yo=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 04 Mar 2026 06:51:20 GMT"
+          "Value": "Sat, 14 Mar 2026 05:55:18 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -14609,7 +14609,7 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "pq94wgemri"
+          "Value": "qh6mm4rcqu"
         },
         {
           "Name": "label",
@@ -14617,7 +14617,7 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-yWOgh4p/KjSItPqc0cY2q5Bt4N14BTNzb8/Jn8shTSE="
+          "Value": "sha256-r6Oml2BzoBaANeuY26adFsupk6rkW6u9cOMcn/nQ1yo="
         }
       ]
     },
