@@ -2,4 +2,5 @@ bin/
 obj/
 *.user
 *.secrets.json
+appsettings.json
 .env
