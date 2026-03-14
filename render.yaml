@@ -1,0 +1,42 @@
+services:
+  - type: web
+    name: destinywander
+    env: docker
+    plan: free
+    autoDeploy: true
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: ASPNETCORE_URLS
+        value: http://0.0.0.0:8080
+      - key: MongoDb__ConnectionString
+        sync: false
+      - key: MongoDb__DatabaseName
+        value: TravelWebsiteDb
+      - key: Jwt__Key
+        sync: false
+      - key: Jwt__Issuer
+        value: TravelWebApp
+      - key: Jwt__Audience
+        value: TravelWebApp
+      - key: AirScrapperApi__BaseUrl
+        value: https://sky-scrapper.p.rapidapi.com/
+      - key: AirScrapperApi__ApiHost
+        value: sky-scrapper.p.rapidapi.com
+      - key: AirScrapperApi__ApiKey
+        sync: false
+      - key: TaxiApi__BaseUrl
+        value: https://booking-com15.p.rapidapi.com/
+      - key: TaxiApi__ApiHost
+        value: booking-com15.p.rapidapi.com
+      - key: TaxiApi__ApiKey
+        sync: false
+      - key: HotelApi__ApiHost
+        value: booking-com.p.rapidapi.com
+      - key: HotelApi__ApiKey
+        sync: false
+      - key: Google__ClientId
+        sync: false
+      - key: Google__ClientSecret
+        sync: false
+      - key: App__BaseUrl
+        sync: false
